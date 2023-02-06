@@ -18,4 +18,3 @@ class Tournament:
         self.endingdate = ending_date
         self.number_of_rounds = number_of_rounds
         self.description = description
-        

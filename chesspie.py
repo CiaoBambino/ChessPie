@@ -1,3 +1,4 @@
+from models import match, player, round, 
 
 def main():
     pass

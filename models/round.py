@@ -2,8 +2,6 @@ from tournament import Tournament
 
 class Round:
 
-    
-
 
     def __init__(self, actual_round,
                  starting_time,

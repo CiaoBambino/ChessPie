@@ -7,13 +7,13 @@ class PLayer:
     def __init__(self, name, first_name, birthday):
         """definition of a player"""
         
-        self.Player.PLAYER_ID_INCREMENT += 1
-        name = self.name
-        first_name = self.first_name
-        birthday = self.birthday
-        player_id = PLAYER_ID_INCREMENT
-        total_score = 0
-        tournament_score = 0
+        PLAYER_ID_INCREMENT += 1
+        self.name = name
+        self.first_name = first_name
+        self.birthday = birthday
+        self.player_id = PLAYER_ID_INCREMENT
+        self.total_score = 0
+        self.tournament_score = 0
 
     def __str__(self) -> str:
         return self.first_name + " " + self.name + " " + self.player_id

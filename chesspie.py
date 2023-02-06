@@ -1,7 +1,9 @@
-from models import match, player, round, 
+from views.view import View
+from controllers.controler import Controler
 
 def main():
-    pass
+    view = View
+    controler = Controler
 
 
 if __name__ == "__main__":

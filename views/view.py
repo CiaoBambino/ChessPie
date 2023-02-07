@@ -1,2 +1,9 @@
+import curses
+
 class View:
-    pass
+    
+    def __init__(self) -> None:
+        
+        terminal = curses.initscr()
+
+        curses.endwin()

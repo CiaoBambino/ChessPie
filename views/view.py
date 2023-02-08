@@ -98,19 +98,258 @@ class TournamentMenu:
                     print("Cette option n'existe pas")
 
 class RoundMenu:
-    pass
+    
+    
+    def __init__(self):
+
+        ClearTerminal()
+        print("\n TOURS \n")
+        print("[1] AFFICHER LES TOURS")
+        print("[2] AFFICHER LES MATCH")
+        print("[3] CHARGER UN TOUR")
+        print("[4] MODIFIER UN TOUR")
+        print("[5] SUPPRIMER UN TOUR")
+        print("[6] RETOUR")
+        print("[q] quitter" + "      " + 
+              "[n]nettoyer" + "      " +
+              "[s]sauvegarder")
+        
+        has_decided = False
+
+        while not has_decided:
+            
+            user_choice = input("\n Entrez votre choix : ")
+            
+            match user_choice:
+                case "1":
+                    print("option1")
+                    has_decided = True
+                case "2":
+                    print("option2")
+                    has_decided = True
+                case "3":
+                    print("option3")
+                    has_decided = True
+                case "4":
+                    print("option4")
+                    has_decided = True
+                case "5":
+                    print("option5")
+                    has_decided = True
+                case "6":
+                    print("retour")
+                case "q" | "Q" | "quit" | "quitt" | "quitter" | "Quitter":
+                    exit()
+                case "n":
+                    print("option6")
+                case "s":
+                    print("option7")
+                case _:
+                    print("Cette option n'existe pas")
 
 class MatchMenu:
-    pass
+    
+    
+    def __init__(self):
+
+        ClearTerminal()
+        print("\n MATCH \n")
+        print("[1] AFFICHER LES MATCH")
+        print("[2] MODIFIER UN MATCH")
+        print("[3] SUPPRIMER UN MATCH")
+        print("[4] CREER UN MATCH")
+        print("[5] RETOUR")
+        print("[q] quitter" + "      " + 
+              "[n]nettoyer" + "      " +
+              "[s]sauvegarder")
+        
+        has_decided = False
+
+        while not has_decided:
+            
+            user_choice = input("\n Entrez votre choix : ")
+            
+            match user_choice:
+                case "1":
+                    print("option1")
+                    has_decided = True
+                case "2":
+                    print("option2")
+                    has_decided = True
+                case "3":
+                    print("option3")
+                    has_decided = True
+                case "4":
+                    print("option4")
+                    has_decided = True
+                case "5":
+                    print("retour")
+                    has_decided = True
+                case "q" | "Q" | "quit" | "quitt" | "quitter" | "Quitter":
+                    exit()
+                case "n":
+                    print("option6")
+                case "s":
+                    print("option7")
+                case _:
+                    print("Cette option n'existe pas")
 
 class PlayerMenu:
-    pass
+    
+    
+    def __init__(self):
+
+        ClearTerminal()
+        print("\n JOUEURS \n")
+        print("[1] LISTE COMPLETE")
+        print("[2] MODIFIER UN JOUEUR")
+        print("[3] SUPPRIMER UN JOUEUR")
+        print("[4] CREER UN PROFIL")
+        print("[5] RETOUR")
+        print("[q] quitter" + "      " + 
+              "[n]nettoyer" + "      " +
+              "[s]sauvegarder")
+        
+        has_decided = False
+
+        while not has_decided:
+            
+            user_choice = input("\n Entrez votre choix : ")
+            
+            match user_choice:
+                case "1":
+                    print("option1")
+                    has_decided = True
+                case "2":
+                    print("option2")
+                    has_decided = True
+                case "3":
+                    print("option3")
+                    has_decided = True
+                case "4":
+                    print("option4")
+                    has_decided = True
+                case "5":
+                    print("retour")
+                    has_decided = True
+                case "q" | "Q" | "quit" | "quitt" | "quitter" | "Quitter":
+                    exit()
+                case "n":
+                    print("option6")
+                case "s":
+                    print("option7")
+                case _:
+                    print("Cette option n'existe pas")
 
 class RapportMenu:
-    pass
+    
+    
+    def __init__(self):
+
+        ClearTerminal()
+        print("\n RAPPORT \n")
+        print("[1] LISTE DES JOUEURS")
+        print("[2] LISTE DES JOUEURS D'UN TOURNOI")   
+        print("[3] LISTE DES TOURNOIS")
+        print("[4] LISTE DES TOUR D'UN TOURNOI")
+        print("[5] LISTE DES MATCH D'UN TOUR")
+        print("[6] NOM/DATE D'UN TOURNOI")      
+        print("[7] RETOUR")
+        print("[q] quitter" + "      " + 
+              "[n]nettoyer" + "      " +
+              "[s]sauvegarder")
+        
+        has_decided = False
+
+        while not has_decided:
+            
+            user_choice = input("\n Entrez votre choix : ")
+            
+            match user_choice:
+                case "1":
+                    print("option1")
+                    has_decided = True
+                case "2":
+                    print("option2")
+                    has_decided = True
+                case "3":
+                    print("option3")
+                    has_decided = True
+                case "4":
+                    print("option4")
+                    has_decided = True
+                case "5":
+                    print("option5")
+                    has_decided = True
+                case "6":
+                    print("option6")
+                    has_decided = True
+                case "7":
+                    print("retour")
+                    has_decided = True
+                case "q" | "Q" | "quit" | "quitt" | "quitter" | "Quitter":
+                    exit()
+                case "n":
+                    print("option6")
+                case "s":
+                    print("option7")
+                case _:
+                    print("Cette option n'existe pas")
 
 class SettingMenu:
-    pass
+    
+    
+    def __init__(self):
+
+        ClearTerminal()
+        print("\n REGLAGES \n")
+        print("[1] LISTE DES JOUEURS")
+        print("[2] LISTE DES JOUEURS D'UN TOURNOI")   
+        print("[3] LISTE DES TOURNOIS")
+        print("[4] LISTE DES TOUR D'UN TOURNOI")
+        print("[5] LISTE DES MATCH D'UN TOUR")
+        print("[6] NOM/DATE D'UN TOURNOI")      
+        print("[7] RETOUR")
+        print("[q] quitter" + "      " + 
+              "[n]nettoyer" + "      " +
+              "[s]sauvegarder")
+        
+        has_decided = False
+
+        while not has_decided:
+            
+            user_choice = input("\n Entrez votre choix : ")
+            
+            match user_choice:
+                case "1":
+                    print("option1")
+                    has_decided = True
+                case "2":
+                    print("option2")
+                    has_decided = True
+                case "3":
+                    print("option3")
+                    has_decided = True
+                case "4":
+                    print("option4")
+                    has_decided = True
+                case "5":
+                    print("option5")
+                    has_decided = True
+                case "6":
+                    print("option6")
+                    has_decided = True
+                case "7":
+                    print("retour")
+                    has_decided = True
+                case "q" | "Q" | "quit" | "quitt" | "quitter" | "Quitter":
+                    exit()
+                case "n":
+                    print("option6")
+                case "s":
+                    print("option7")
+                case _:
+                    print("Cette option n'existe pas")
 
 class ClearTerminal:
     """Clear the terminal"""

@@ -1,9 +1,11 @@
-from views.view import View
+from views.view import MainMenu
 from controllers.controler import Controler
 
 def main():
-    view = View
-    controler = Controler
+  
+    view = MainMenu()
+    chess = Controler(view)
+
 
 
 if __name__ == "__main__":

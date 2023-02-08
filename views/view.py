@@ -1,5 +1,6 @@
 from os import system, name
 
+
 class MainMenu:
 
     def __init__(self):
@@ -10,16 +11,16 @@ class MainMenu:
         print("[2] JOUEURS")
         print("[3] RAPPORTS")
         print("[4] REGLAGES")
-        print("[q] quitter" + "      " + 
+        print("[q] quitter" + "      " +
               "[n]nettoyer" + "      " +
               "[s]sauvegarder")
-        
+
         self.has_decided = False
-        
+
         while not self.has_decided:
-            
+
             user_choice = input("\n Entrez votre choix : ")
-            
+
             match user_choice:
                 case "1":
                     ClearTerminal()
@@ -44,16 +45,16 @@ class MainMenu:
                     self.has_decided = True
                 case "s":
                     print("sauvegarder")
-                    has_decided = True
+                    self.has_decided = True
                 case _:
                     print("Cette option n'existe pas")
-                
+
     def __call__(self, *args, **kwargs):
-        pass  
-    
+        pass
+
 
 class TournamentMenu:
-    
+
     def __init__(self):
 
         ClearTerminal()
@@ -64,32 +65,32 @@ class TournamentMenu:
         print("[4] MODIFIER UN TOURNOI")
         print("[5] SUPPRIMER UN TOURNOI")
         print("[6] RETOUR")
-        print("[q] quitter" + "      " + 
+        print("[q] quitter" + "      " +
               "[n]nettoyer" + "      " +
               "[s]sauvegarder")
-        
+
         self.has_decided = False
 
         while not self.has_decided:
-            
+
             user_choice = input("\n Entrez votre choix : ")
-            
+
             match user_choice:
                 case "1":
                     print("option1")
-                    has_decided = True
+                    self.has_decided = True
                 case "2":
                     print("option2")
-                    has_decided = True
+                    self.has_decided = True
                 case "3":
                     print("option3")
-                    has_decided = True
+                    self.has_decided = True
                 case "4":
                     print("option4")
-                    has_decided = True
+                    self.has_decided = True
                 case "5":
                     print("option5")
-                    has_decided = True
+                    self.has_decided = True
                 case "6":
                     ClearTerminal()
                     MainMenu()
@@ -106,8 +107,7 @@ class TournamentMenu:
 
 
 class RoundMenu:
-    
-    
+
     def __init__(self):
 
         ClearTerminal()
@@ -118,32 +118,32 @@ class RoundMenu:
         print("[4] MODIFIER UN TOUR")
         print("[5] SUPPRIMER UN TOUR")
         print("[6] RETOUR")
-        print("[q] quitter" + "      " + 
+        print("[q] quitter" + "      " +
               "[n] nettoyer" + "      " +
               "[s] sauvegarder")
-        
-        has_decided = False
 
-        while not has_decided:
-            
+        self.has_decided = False
+
+        while not self.has_decided:
+
             user_choice = input("\n Entrez votre choix : ")
-            
+
             match user_choice:
                 case "1":
                     print("option1")
-                    has_decided = True
+                    self.has_decided = True
                 case "2":
                     print("option2")
-                    has_decided = True
+                    self.has_decided = True
                 case "3":
                     print("option3")
-                    has_decided = True
+                    self.has_decided = True
                 case "4":
                     print("option4")
-                    has_decided = True
+                    self.has_decided = True
                 case "5":
                     print("option5")
-                    has_decided = True
+                    self.has_decided = True
                 case "6":
                     ClearTerminal()
                     TournamentMenu()
@@ -158,9 +158,9 @@ class RoundMenu:
                 case _:
                     print("Cette option n'existe pas")
 
+
 class MatchMenu:
-    
-    
+
     def __init__(self):
 
         ClearTerminal()
@@ -170,29 +170,29 @@ class MatchMenu:
         print("[3] SUPPRIMER UN MATCH")
         print("[4] CREER UN MATCH")
         print("[5] RETOUR")
-        print("[q] quitter" + "      " + 
+        print("[q] quitter" + "      " +
               "[n] nettoyer" + "      " +
               "[s] sauvegarder")
-        
-        has_decided = False
 
-        while not has_decided:
-            
+        self.has_decided = False
+
+        while not self.has_decided:
+
             user_choice = input("\n Entrez votre choix : ")
-            
+
             match user_choice:
                 case "1":
                     print("option1")
-                    has_decided = True
+                    self.has_decided = True
                 case "2":
                     print("option2")
-                    has_decided = True
+                    self.has_decided = True
                 case "3":
                     print("option3")
-                    has_decided = True
+                    self.has_decided = True
                 case "4":
                     print("option4")
-                    has_decided = True
+                    self.has_decided = True
                 case "5":
                     ClearTerminal()
                     RoundMenu()
@@ -207,9 +207,9 @@ class MatchMenu:
                 case _:
                     print("Cette option n'existe pas")
 
+
 class PlayerMenu:
-    
-    
+
     def __init__(self):
 
         ClearTerminal()
@@ -219,29 +219,29 @@ class PlayerMenu:
         print("[3] SUPPRIMER UN JOUEUR")
         print("[4] CREER UN PROFIL")
         print("[5] RETOUR")
-        print("[q] quitter" + "      " + 
+        print("[q] quitter" + "      " +
               "[n] nettoyer" + "      " +
               "[s] sauvegarder")
-        
-        has_decided = False
 
-        while not has_decided:
-            
+        self.has_decided = False
+
+        while not self.has_decided:
+
             user_choice = input("\n Entrez votre choix : ")
-            
+
             match user_choice:
                 case "1":
                     print("option1")
-                    has_decided = True
+                    self.has_decided = True
                 case "2":
                     print("option2")
-                    has_decided = True
+                    self.has_decided = True
                 case "3":
                     print("option3")
-                    has_decided = True
+                    self.has_decided = True
                 case "4":
                     print("option4")
-                    has_decided = True
+                    self.has_decided = True
                 case "5":
                     ClearTerminal()
                     MainMenu()
@@ -256,49 +256,49 @@ class PlayerMenu:
                 case _:
                     print("Cette option n'existe pas")
 
+
 class RapportMenu:
-    
-    
+
     def __init__(self):
 
         ClearTerminal()
         print("\n RAPPORT \n")
         print("[1] LISTE DES JOUEURS")
-        print("[2] LISTE DES JOUEURS D'UN TOURNOI")   
+        print("[2] LISTE DES JOUEURS D'UN TOURNOI")
         print("[3] LISTE DES TOURNOIS")
         print("[4] LISTE DES TOUR D'UN TOURNOI")
         print("[5] LISTE DES MATCH D'UN TOUR")
-        print("[6] NOM/DATE D'UN TOURNOI")      
+        print("[6] NOM/DATE D'UN TOURNOI")
         print("[7] RETOUR")
-        print("[q] quitter" + "      " + 
+        print("[q] quitter" + "      " +
               "[n] nettoyer" + "      " +
               "[s] sauvegarder")
-        
-        has_decided = False
 
-        while not has_decided:
-            
+        self.has_decided = False
+
+        while not self.has_decided:
+
             user_choice = input("\n Entrez votre choix : ")
-            
+
             match user_choice:
                 case "1":
                     print("option1")
-                    has_decided = True
+                    self.has_decided = True
                 case "2":
                     print("option2")
-                    has_decided = True
+                    self.has_decided = True
                 case "3":
                     print("option3")
-                    has_decided = True
+                    self.has_decided = True
                 case "4":
                     print("option4")
-                    has_decided = True
+                    self.has_decided = True
                 case "5":
                     print("option5")
-                    has_decided = True
+                    self.has_decided = True
                 case "6":
                     print("option6")
-                    has_decided = True
+                    self.has_decided = True
                 case "7":
                     ClearTerminal()
                     MainMenu()
@@ -313,49 +313,49 @@ class RapportMenu:
                 case _:
                     print("Cette option n'existe pas")
 
+
 class SettingMenu:
-    
-    
+
     def __init__(self):
 
         ClearTerminal()
         print("\n REGLAGES \n")
         print("[1] REGLAGE 1")
-        print("[2] REGLAGE 2")   
+        print("[2] REGLAGE 2")
         print("[3] REGLAGE 3")
         print("[4] REGLAGE 4")
         print("[5] REGLAGE 5")
-        print("[6] REGLAGE 6")      
+        print("[6] REGLAGE 6")
         print("[7] RETOUR")
-        print("[q] quitter" + "      " + 
+        print("[q] quitter" + "      " +
               "[n] nettoyer" + "      " +
               "[s] sauvegarder")
-        
-        has_decided = False
 
-        while not has_decided:
-            
+        self.has_decided = False
+
+        while not self.has_decided:
+
             user_choice = input("\n Entrez votre choix : ")
-            
+
             match user_choice:
                 case "1":
                     print("option1")
-                    has_decided = True
+                    self.has_decided = True
                 case "2":
                     print("option2")
-                    has_decided = True
+                    self.has_decided = True
                 case "3":
                     print("option3")
-                    has_decided = True
+                    self.has_decided = True
                 case "4":
                     print("option4")
-                    has_decided = True
+                    self.has_decided = True
                 case "5":
                     print("option5")
-                    has_decided = True
+                    self.has_decided = True
                 case "6":
                     print("option6")
-                    has_decided = True
+                    self.has_decided = True
                 case "7":
                     ClearTerminal()
                     MainMenu()
@@ -370,11 +370,12 @@ class SettingMenu:
                 case _:
                     print("Cette option n'existe pas")
 
+
 class ClearTerminal:
     """Clear the terminal"""
 
     def __init__(self):
-        
+
         """
         if (os.name == 'posix'):
             os.system('clear')
@@ -388,5 +389,4 @@ class ClearTerminal:
             _ = system('cls')
         # others
         else:
-            _ = system('clear')     
-       
+            _ = system('clear')

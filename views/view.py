@@ -14,25 +14,33 @@ class MainMenu:
               "[n]nettoyer" + "      " +
               "[s]sauvegarder")
         
-        while True:
+        has_decided = False
+        
+        while not has_decided:
             
             user_choice = input("\n Entrez votre choix : ")
             
             match user_choice:
                 case "1":
                     print("option1")
+                    has_decided = True
                 case "2":
                     print("option2")
+                    has_decided = True
                 case "3":
                     print("option3")
+                    has_decided = True
                 case "4":
                     print("option4")
+                    has_decided = True
                 case "q" | "Q" | "quit" | "quitt" | "quitter" | "Quitter":
                     exit()
                 case "n":
-                    print("option56")
+                    print("option6")
+                    has_decided = True
                 case "s":
-                    print("otoion7")
+                    print("option7")
+                    has_decided = True
                 case _:
                     print("Cette option n'existe pas")
                 
@@ -41,7 +49,53 @@ class MainMenu:
     
 
 class TournamentMenu:
-    pass
+    
+    def __init__(self):
+
+        ClearTerminal()
+        print("\n TOURNOIS \n")
+        print("[1] AFFICHER LES TOURS")
+        print("[2] CREER UN TOURNOI")
+        print("[3] CHARGER UN TOURNOI")
+        print("[4] MODIFIER UN TOURNOI")
+        print("[5] SUPPRIMER UN TOURNOI")
+        print("[6] RETOUR")
+        print("[q] quitter" + "      " + 
+              "[n]nettoyer" + "      " +
+              "[s]sauvegarder")
+        
+        has_decided = False
+
+        while not has_decided:
+            
+            user_choice = input("\n Entrez votre choix : ")
+            
+            match user_choice:
+                case "1":
+                    print("option1")
+                    has_decided = True
+                case "2":
+                    print("option2")
+                    has_decided = True
+                case "3":
+                    print("option3")
+                    has_decided = True
+                case "4":
+                    print("option4")
+                    has_decided = True
+                case "5":
+                    print("option5")
+                    has_decided = True
+                case "6":
+                    print("retour")
+                case "q" | "Q" | "quit" | "quitt" | "quitter" | "Quitter":
+                    exit()
+                case "n":
+                    print("option6")
+                case "s":
+                    print("option7")
+                case _:
+                    print("Cette option n'existe pas")
 
 class RoundMenu:
     pass

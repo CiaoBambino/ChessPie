@@ -40,7 +40,8 @@ class MainMenu:
                 case "q" | "Q" | "quit" | "quitt" | "quitter" | "Quitter":
                     exit()
                 case "n":
-                    ClearTerminal()
+                    MainMenu()
+                    self.has_decided = True
                 case "s":
                     print("sauvegarder")
                     has_decided = True
@@ -96,11 +97,13 @@ class TournamentMenu:
                 case "q" | "Q" | "quit" | "quitt" | "quitter" | "Quitter":
                     exit()
                 case "n":
-                    ClearTerminal()
+                    TournamentMenu()
+                    self.has_decided = True
                 case "s":
                     print("option7")
                 case _:
                     print("Cette option n'existe pas")
+
 
 class RoundMenu:
     
@@ -148,7 +151,8 @@ class RoundMenu:
                 case "q" | "Q" | "quit" | "quitt" | "quitter" | "Quitter":
                     exit()
                 case "n":
-                    ClearTerminal()
+                    RoundMenu()
+                    self.has_decided = True
                 case "s":
                     print("option7")
                 case _:
@@ -196,7 +200,8 @@ class MatchMenu:
                 case "q" | "Q" | "quit" | "quitt" | "quitter" | "Quitter":
                     exit()
                 case "n":
-                    ClearTerminal()
+                    MatchMenu()
+                    self.has_decided = True
                 case "s":
                     print("option7")
                 case _:
@@ -244,7 +249,8 @@ class PlayerMenu:
                 case "q" | "Q" | "quit" | "quitt" | "quitter" | "Quitter":
                     exit()
                 case "n":
-                    ClearTerminal()
+                    PlayerMenu()
+                    self.has_decided = True
                 case "s":
                     print("option7")
                 case _:
@@ -300,7 +306,8 @@ class RapportMenu:
                 case "q" | "Q" | "quit" | "quitt" | "quitter" | "Quitter":
                     exit()
                 case "n":
-                    ClearTerminal()
+                    RapportMenu()
+                    self.has_decided = True
                 case "s":
                     print("option7")
                 case _:
@@ -313,12 +320,12 @@ class SettingMenu:
 
         ClearTerminal()
         print("\n REGLAGES \n")
-        print("[1] LISTE DES JOUEURS")
-        print("[2] LISTE DES JOUEURS D'UN TOURNOI")   
-        print("[3] LISTE DES TOURNOIS")
-        print("[4] LISTE DES TOUR D'UN TOURNOI")
-        print("[5] LISTE DES MATCH D'UN TOUR")
-        print("[6] NOM/DATE D'UN TOURNOI")      
+        print("[1] REGLAGE 1")
+        print("[2] REGLAGE 2")   
+        print("[3] REGLAGE 3")
+        print("[4] REGLAGE 4")
+        print("[5] REGLAGE 5")
+        print("[6] REGLAGE 6")      
         print("[7] RETOUR")
         print("[q] quitter" + "      " + 
               "[n] nettoyer" + "      " +
@@ -356,7 +363,8 @@ class SettingMenu:
                 case "q" | "Q" | "quit" | "quitt" | "quitter" | "Quitter":
                     exit()
                 case "n":
-                    ClearTerminal()
+                    SettingMenu()
+                    self.has_decided = True
                 case "s":
                     print("option7")
                 case _:
@@ -365,7 +373,7 @@ class SettingMenu:
 class ClearTerminal:
     """Clear the terminal"""
 
-    def __call__(self):
+    def __init__(self):
         
         """
         if (os.name == 'posix'):

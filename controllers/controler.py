@@ -20,15 +20,15 @@ class Controler:
     def create_player():
         pass
 
-    def JSONserialiser(Player):
+    def JSONserialiser(Object):
         
-        name = Player.__name__ + ".json"
+        name = Object.__name__ + ".json"
         directory = "\data"
         directory_name = os.path.join(directory, name)
         path = os.getcwd() + directory_name
         print(path)
 
-        print(Player())
+        print(Object())
         with open("path", 'a') as f:
             json.dump(Object, f)
 

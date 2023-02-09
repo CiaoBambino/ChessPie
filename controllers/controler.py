@@ -17,10 +17,10 @@ class Controler:
     def get_player():
         pass
 
-    def add_player():
+    def create_player():
         pass
 
-    def JESAISPASQUOI(Player):
+    def JSONserialiser(Player):
         
         name = Player.__name__ + ".json"
         directory = "\data"

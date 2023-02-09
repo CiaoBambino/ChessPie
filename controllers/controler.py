@@ -1,6 +1,6 @@
 import json
 import os
-
+from models.player import PLayer
 
 class Controler:
 
@@ -20,22 +20,18 @@ class Controler:
     def add_player():
         pass
 
+    def JESAISPASQUOI(Player):
+        
+        name = Player.__name__ + ".json"
+        directory = "\data"
+        directory_name = os.path.join(directory, name)
+        path = os.getcwd() + directory_name
+        print(path)
 
-class JSONTranslate:
+        print(Player())
+        with open("path", 'a') as f:
+            json.dump(Object, f)
 
-    def serializer(Object):
-        name = Object.__name__ + ".json"
-        directory_name = ".\data"
-        complete_name = os.path.join(directory_name, name)
-
-        with open("complete_name", 'a') as f:
-            pass
-
-
-
-
-    def unserializer():
-        pass
 
 class CreateTournament:
     pass

@@ -164,7 +164,7 @@ class MatchMenu:
     def __init__(self):
 
         ClearTerminal()
-        print("\n MATCH \n")
+        print("\n --MATCH-- \n")
         print("[1] AFFICHER LES MATCH")
         print("[2] MODIFIER UN MATCH")
         print("[3] SUPPRIMER UN MATCH")
@@ -213,7 +213,7 @@ class PlayerMenu:
     def __init__(self):
 
         ClearTerminal()
-        print("\n JOUEURS \n")
+        print("\n --JOUEURS-- \n")
         print("[1] LISTE COMPLETE")
         print("[2] MODIFIER UN JOUEUR")
         print("[3] SUPPRIMER UN JOUEUR")
@@ -240,7 +240,42 @@ class PlayerMenu:
                     print("option3")
                     self.has_decided = True
                 case "4":
-                    print("option4")
+                    ClearTerminal()
+                    print(" --CREER UN PROFIL--")
+                    print("Pour créer un nouveau profil de joueur "
+                          "veuillez entrer ses informations personnel.")
+                    name = input("nom : ")
+                    ClearTerminal()
+                    print(" --CREER UN PROFIL--")
+                    print("Pour créer un nouveau profil de joueur "
+                          "veuillez entrer ses informations personnel.")
+                    print("nom : ", name)
+                    first_name = input("prénom : ")
+                    ClearTerminal()
+                    print(" --CREER UN PROFIL--")
+                    print("Pour créer un nouveau profil de joueur "
+                          "veuillez entrer ses informations personnel.")
+                    print("nom : ", name)
+                    print("prénom : ", first_name)
+                    birthday = input("Date de naissance : ")
+                    ClearTerminal()
+                    print(" --CREER UN PROFIL--")
+                    print("Pour créer un nouveau profil de joueur "
+                          "veuillez entrer ses informations personnel.")
+                    print("nom : ", name)
+                    print("prénom : ", first_name)
+                    print("Date de naissance : ", birthday)
+                    note = input("note (optionnel) : ")
+                    ClearTerminal()
+                    print(" --CREER UN PROFIL--")
+                    print("Pour créer un nouveau profil de joueur "
+                          "veuillez entrer ses informations personnel.")
+                    print("nom : ", name)
+                    print("prénom : ", first_name)
+                    print("Date de naissance : ", birthday)
+                    print("note : ", note)
+                    
+
                     self.has_decided = True
                 case "5":
                     ClearTerminal()
@@ -262,7 +297,7 @@ class RapportMenu:
     def __init__(self):
 
         ClearTerminal()
-        print("\n RAPPORT \n")
+        print("\n --RAPPORT-- \n")
         print("[1] LISTE DES JOUEURS")
         print("[2] LISTE DES JOUEURS D'UN TOURNOI")
         print("[3] LISTE DES TOURNOIS")
@@ -319,7 +354,7 @@ class SettingMenu:
     def __init__(self):
 
         ClearTerminal()
-        print("\n REGLAGES \n")
+        print("\n --REGLAGES-- \n")
         print("[1] REGLAGE 1")
         print("[2] REGLAGE 2")
         print("[3] REGLAGE 3")

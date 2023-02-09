@@ -5,11 +5,10 @@ from models import player
 
 def main():
 
-    """view = MainMenu()
+    view = MainMenu()
     chess = Controler(view)
     chess.run()
-    Controler.serializer(player.PLayer)"""
-    Controler.JESAISPASQUOI()
+    #Controler.JSONserialiser()
 
 
 

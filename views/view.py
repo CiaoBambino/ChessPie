@@ -240,8 +240,7 @@ class PlayerMenu:
                     print("option3")
                     self.has_decided = True
                 case "4":
-                    
-
+                    self.ask_user()
                     self.has_decided = True
                 case "5":
                     ClearTerminal()
@@ -257,49 +256,41 @@ class PlayerMenu:
                 case _:
                     print("Cette option n'existe pas")
 
-    def decorateur(function):
+    def cleaner(function):
         def wrapper(*args, **kwargs):
 
             ClearTerminal()
-            print(" --CREER UN PROFIL--")
-            print("Pour créer un nouveau profil de joueur "
-                  "veuillez entrer ses informations personnel.")
-
-            result = function(*args, **kwargs)
+            result = function()
 
             return result
 
         wrapper.__doc__ = function.__doc__
         return wrapper
 
-    @decorateur
-    def new_user_data():
+    @cleaner
+    def ask_user():
 
         user_data = ["name", "first_name", "birthday", "note"]
-
+        title = ["nom : ", "prénom : ", "Date de naissance : ", "note : "]
+        base = " --CREER UN PROFIL--\n"
+        base += "Pour créer un nouveau profil de joueur veuillez entrer ses informations personnel."
+        print(base)
+        
         for x in range(len(user_data)):
 
-            if x == 0:
-                user_data[x] = input("nom : ")
-            elif x == 1:
-                print("nom : ", user_data[0])
-                user_data[x] = input("prénom : ")
-            elif x == 2:
-                print("nom : ", user_data[0])
-                print("prénom : ", user_data[1])
-                user_data[x] = input("Date de naissance : ")
-            elif x == 3:
-                print("nom : ", user_data[0])
-                print("prénom : ", user_data[1])
-                print("Date de naissance : ", user_data[2])
-                user_data[x] = input("note (optionnel) : ")
-            else:
-                print("nom : ", user_data[0])
-                print("prénom : ", user_data[0])
-                print("Date de naissance : ", user_data[2])
-                print("note : ", user_data[3])
+            user_data[x] = input(title[x])
+            line = PlayerMenu.proper_line(x, user_data, title)
+            base += "\n"
+            base += line
+            ClearTerminal()
+            print(base)
 
         return user_data
+
+    def proper_line(x, user_data, title):
+        """get 2 strings, return 1 string by additionning them second value first"""
+        text = title[x] + user_data[x]
+        return text
 
 
 class RapportMenu:

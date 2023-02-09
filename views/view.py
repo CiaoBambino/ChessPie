@@ -1,4 +1,5 @@
 from os import system, name
+from controllers import controler
 
 
 class MainMenu:
@@ -240,8 +241,10 @@ class PlayerMenu:
                     print("option3")
                     self.has_decided = True
                 case "4":
-                    self.ask_user()
+                    #self.ask_user()
+                    controler.CreatePlayer()
                     self.has_decided = True
+                    PlayerMenu()
                 case "5":
                     ClearTerminal()
                     MainMenu()
@@ -275,7 +278,7 @@ class PlayerMenu:
         base = " --CREER UN PROFIL--\n"
         base += "Pour créer un nouveau profil de joueur veuillez entrer ses informations personnel."
         print(base)
-        
+
         for x in range(len(user_data)):
 
             user_data[x] = input(title[x])
@@ -288,10 +291,22 @@ class PlayerMenu:
         return user_data
 
     def proper_line(x, user_data, title):
-        """get 2 strings, return 1 string by additionning them second value first"""
+        """get 2 strings, return 1 string
+        by additionning them second value first"""
         text = title[x] + user_data[x]
         return text
 
+
+class CreatePlayerView:
+
+    def view():
+        # user data and title must have same amount of elements
+        user_data = ["name", "first_name", "birthday", "note"]
+        title = ["nom : ", "prénom : ", "Date de naissance : ", "note : "]
+        base = " --CREER UN PROFIL--\n"
+        base += "Pour créer un nouveau profil de joueur veuillez "
+        base += "entrer ses informations personnels."
+        return user_data, title, base
 
 class RapportMenu:
 

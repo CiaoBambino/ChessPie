@@ -240,40 +240,6 @@ class PlayerMenu:
                     print("option3")
                     self.has_decided = True
                 case "4":
-                    ClearTerminal()
-                    print(" --CREER UN PROFIL--")
-                    print("Pour créer un nouveau profil de joueur "
-                          "veuillez entrer ses informations personnel.")
-                    name = input("nom : ")
-                    ClearTerminal()
-                    print(" --CREER UN PROFIL--")
-                    print("Pour créer un nouveau profil de joueur "
-                          "veuillez entrer ses informations personnel.")
-                    print("nom : ", name)
-                    first_name = input("prénom : ")
-                    ClearTerminal()
-                    print(" --CREER UN PROFIL--")
-                    print("Pour créer un nouveau profil de joueur "
-                          "veuillez entrer ses informations personnel.")
-                    print("nom : ", name)
-                    print("prénom : ", first_name)
-                    birthday = input("Date de naissance : ")
-                    ClearTerminal()
-                    print(" --CREER UN PROFIL--")
-                    print("Pour créer un nouveau profil de joueur "
-                          "veuillez entrer ses informations personnel.")
-                    print("nom : ", name)
-                    print("prénom : ", first_name)
-                    print("Date de naissance : ", birthday)
-                    note = input("note (optionnel) : ")
-                    ClearTerminal()
-                    print(" --CREER UN PROFIL--")
-                    print("Pour créer un nouveau profil de joueur "
-                          "veuillez entrer ses informations personnel.")
-                    print("nom : ", name)
-                    print("prénom : ", first_name)
-                    print("Date de naissance : ", birthday)
-                    print("note : ", note)
                     
 
                     self.has_decided = True
@@ -290,6 +256,50 @@ class PlayerMenu:
                     print("option7")
                 case _:
                     print("Cette option n'existe pas")
+
+    def decorateur(function):
+        def wrapper(*args, **kwargs):
+
+            ClearTerminal()
+            print(" --CREER UN PROFIL--")
+            print("Pour créer un nouveau profil de joueur "
+                  "veuillez entrer ses informations personnel.")
+
+            result = function(*args, **kwargs)
+
+            return result
+
+        wrapper.__doc__ = function.__doc__
+        return wrapper
+
+    @decorateur
+    def new_user_data():
+
+        user_data = ["name", "first_name", "birthday", "note"]
+
+        for x in range(len(user_data)):
+
+            if x == 0:
+                user_data[x] = input("nom : ")
+            elif x == 1:
+                print("nom : ", user_data[0])
+                user_data[x] = input("prénom : ")
+            elif x == 2:
+                print("nom : ", user_data[0])
+                print("prénom : ", user_data[1])
+                user_data[x] = input("Date de naissance : ")
+            elif x == 3:
+                print("nom : ", user_data[0])
+                print("prénom : ", user_data[1])
+                print("Date de naissance : ", user_data[2])
+                user_data[x] = input("note (optionnel) : ")
+            else:
+                print("nom : ", user_data[0])
+                print("prénom : ", user_data[0])
+                print("Date de naissance : ", user_data[2])
+                print("note : ", user_data[3])
+
+        return user_data
 
 
 class RapportMenu:

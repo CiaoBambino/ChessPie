@@ -79,7 +79,7 @@ class Controler:
 
     def is_valid():
         """Check if answer is Yes or No and return True or False"""
-        yes_list = ["Oui", "oui", "Yes", "yes", "Ou", 
+        yes_list = ["Oui", "oui", "Yes", "yes", "Ou",
                     "ou", "Ye", "ye", "O", "o", "Y", "y", "ok"]
         no_list = ["Non", "non", "No", "no", "Nn", "nn", "N", "n"]
         answer_list = yes_list + no_list
@@ -117,7 +117,7 @@ class CreateTournament:
         name, place, starting_date, description = [*data]
         new_tournament = tournament.Tournament(name, place,
                                                starting_date, description)
-        #Controler.JSONserialiser(new_tournament)
+        Controler.JSONserialiser(new_tournament)
 
 
 class CreatePlayer:
@@ -125,8 +125,7 @@ class CreatePlayer:
     def __init__(self):
         # initialise the attributes from the view
         user_data, title, base = view.CreatePlayerView.view()
-        # store the inputs into data*
-        
+        # store the inputs into data
         data = Controler.coordinate_input(user_data, title, base)
         # unpack data and create a new player object
         name, first_name, birthday, note = [*data]

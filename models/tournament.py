@@ -38,6 +38,7 @@ class Tournament:
         tournament_data['ending_date'] = self.ending_date
         tournament_data['description'] = self.description
         tournament_data['tournament_id'] = self.tournament_id
+        tournament_data['registered_players'] = self.registered_players
         tournament_data['actual_round'] = self.actual_round
         tournament_data['rounds_list'] = self.rounds_list
         tournament_data['number_of_rounds'] = self.number_of_rounds
@@ -52,6 +53,7 @@ class Tournament:
         ending_date = tournament_data['ending_date']
         description = tournament_data['description']
         tournament_id = tournament_data['tournament_id']
+        registered_players = tournament_data['registered_players']
         actual_round = tournament_data['actual_round']
         rounds_list = tournament_data['rounds_list']
         number_of_rounds = tournament_data['number_of_rounds']
@@ -62,6 +64,7 @@ class Tournament:
                           ending_date,
                           description,
                           tournament_id,
+                          registered_players,
                           actual_round,
                           rounds_list,
                           number_of_rounds)

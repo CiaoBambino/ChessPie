@@ -107,6 +107,18 @@ class TournamentMenu:
                     print("Cette option n'existe pas")
 
 
+
+class CreateTournamentView:
+
+    def view():
+        # user data and title must have same amount of elements
+        user_data = ["name", "first_name", "birthday", "note"]
+        title = ["nom : ", "prénom : ", "Date de naissance : ", "note : "]
+        base = " --CREER UN PROFIL--\n"
+        base += "Pour créer un nouveau profil de joueur veuillez "
+        base += "entrer ses informations personnels."
+        return user_data, title, base
+
 class RoundMenu:
 
     def __init__(self):
@@ -257,17 +269,6 @@ class PlayerMenu:
                     print("option7")
                 case _:
                     print("Cette option n'existe pas")
-
-    def cleaner(function):
-        def wrapper(*args, **kwargs):
-
-            ClearTerminal()
-            result = function()
-
-            return result
-
-        wrapper.__doc__ = function.__doc__
-        return wrapper
 
 
 class CreatePlayerView:

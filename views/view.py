@@ -117,13 +117,26 @@ class TournamentView:
 class CreateTournamentView:
 
     def view():
-        # user data and title must have same amount of elements
-        user_data = ["name", "place", "starting_date", "description"]
-        title = ["nom : ", "lieu : ", "date de début : ", "description : "]
+        # user_data and title must have same amount of elements
+        user_data = ["name", "place", "starting_date", "ending_date", "description"]
+        title = ["nom : ", "lieu : ", "date de début : ", "date de fin : ", "description : "]
         base = " --CREER UN TOURNOIS--\n"
         base += "Pour créer un Tournoi veuillez entrer ces informations."
         return user_data, title, base
 
+class SelectPlayerView:
+
+    def __init__(self, player_list):
+        
+
+    def view():
+        # user_data and title must have same amount of elements
+        user_data = ["name", "place", "starting_date", "description"]
+        title = ["nom : ", "lieu : ", "date de début : ", "description : "]
+        base = " --CREER UN TOURNOIS--\n"
+        base += "Pour créer un Tournoi veuillez choisir les joueurs."
+        return user_data, title, base
+    
 
 class RoundMenu:
 
@@ -280,7 +293,7 @@ class PlayerMenu:
 class CreatePlayerView:
 
     def view():
-        # user data and title must have same amount of elements
+        # user_data and title must have same amount of elements
         user_data = ["name", "first_name", "birthday", "note"]
         title = ["nom : ", "prénom : ", "Date de naissance : ", "note : "]
         base = " --CREER UN PROFIL--\n"

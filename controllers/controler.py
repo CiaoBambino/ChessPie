@@ -33,6 +33,20 @@ class Controler:
         with open(path, 'a') as f:
             json.dump(objet, f, indent=2)
 
+    def JSONunserializer(Object):
+
+        name = Object.__class__.__name__ + ".json"
+        directory = "\data"
+        directory_name = os.path.join(directory, name)
+        path = os.getcwd() + directory_name
+
+        with open(path, 'r') as rf:
+            objet = json.load(rf)
+        
+        objet = Object.unserializer(objet)
+
+        return objet
+
     def cleaner(function):
         """Clean terminal and verify if user validate his entries"""
         def wrapper(*args, **kwargs):
@@ -114,6 +128,8 @@ class CreateTournament:
         # store the inputs into data
         data = Controler.coordinate_input(user_data, title, base)
         # load player from /data/player.json
+        players = 
+        # select player to participate tournament
 
         # unpack data and create a new tournament object
         name, place, starting_date, ending_date, description = [*data]

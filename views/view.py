@@ -241,7 +241,6 @@ class PlayerMenu:
                     print("option3")
                     self.has_decided = True
                 case "4":
-                    #self.ask_user()
                     controler.CreatePlayer()
                     self.has_decided = True
                     PlayerMenu()
@@ -270,32 +269,6 @@ class PlayerMenu:
         wrapper.__doc__ = function.__doc__
         return wrapper
 
-    @cleaner
-    def ask_user():
-
-        user_data = ["name", "first_name", "birthday", "note"]
-        title = ["nom : ", "prénom : ", "Date de naissance : ", "note : "]
-        base = " --CREER UN PROFIL--\n"
-        base += "Pour créer un nouveau profil de joueur veuillez entrer ses informations personnel."
-        print(base)
-
-        for x in range(len(user_data)):
-
-            user_data[x] = input(title[x])
-            line = PlayerMenu.proper_line(x, user_data, title)
-            base += "\n"
-            base += line
-            ClearTerminal()
-            print(base)
-
-        return user_data
-
-    def proper_line(x, user_data, title):
-        """get 2 strings, return 1 string
-        by additionning them second value first"""
-        text = title[x] + user_data[x]
-        return text
-
 
 class CreatePlayerView:
 
@@ -307,6 +280,7 @@ class CreatePlayerView:
         base += "Pour créer un nouveau profil de joueur veuillez "
         base += "entrer ses informations personnels."
         return user_data, title, base
+
 
 class RapportMenu:
 

@@ -1,8 +1,9 @@
 import json
+import time
 import os
 from os import system, name
 from views import view
-from models import player
+from models import player, tournament, round, match
 
 
 class Controler:
@@ -33,15 +34,25 @@ class Controler:
             json.dump(objet, f, indent=2)
 
     def cleaner(function):
+        """Clean terminal and verify if user validate his entries"""
         def wrapper(*args, **kwargs):
 
-            ClearTerminal()
-            result = function(*args, **kwargs)
+            condition = False
+            while not condition:
+                ClearTerminal()
+                result = function(*args, **kwargs)
+                condition = Controler.is_valid()
 
             return result
 
         wrapper.__doc__ = function.__doc__
         return wrapper
+
+    def input_checker(x, title):
+
+        entry = input(title[x])
+
+        return entry
 
     @cleaner
     def coordinate_input(user_data, title, base):
@@ -66,12 +77,47 @@ class Controler:
         text = title[x] + user_data[x]
         return text
 
+    def is_valid():
+        """Check if answer is Yes or No and return True or False"""
+        yes_list = ["Oui", "oui", "Yes", "yes", "Ou", 
+                    "ou", "Ye", "ye", "O", "o", "Y", "y", "ok"]
+        no_list = ["Non", "non", "No", "no", "Nn", "nn", "N", "n"]
+        answer_list = yes_list + no_list
+        print("Souhaitez vous valider ?")
+
+        value = True
+        response = ""
+        has_answered = False
+        while not has_answered:
+            entry = input("Oui/Non : ")
+            for answer in answer_list:
+                if entry == answer:
+                    response = entry
+                    has_answered = True
+
+        for yes in yes_list:
+            if response == yes:
+                value = True
+                break
+
+            else:
+                value = False
+
+        return value
 
 
 class CreateTournament:
 
     def __init__(self):
-        pass
+        # initialise the attributes from the view
+        user_data, title, base = view.CreateTournamentView.view()
+        # store the inputs into data
+        data = Controler.coordinate_input(user_data, title, base)
+        # unpack data and create a new tournament object
+        name, place, starting_date, description = [*data]
+        new_tournament = tournament.Tournament(name, place,
+                                               starting_date, description)
+        #Controler.JSONserialiser(new_tournament)
 
 
 class CreatePlayer:
@@ -79,7 +125,8 @@ class CreatePlayer:
     def __init__(self):
         # initialise the attributes from the view
         user_data, title, base = view.CreatePlayerView.view()
-        # store the input into data
+        # store the inputs into data*
+        
         data = Controler.coordinate_input(user_data, title, base)
         # unpack data and create a new player object
         name, first_name, birthday, note = [*data]
@@ -106,7 +153,3 @@ class ClearTerminal:
         # others
         else:
             _ = system('clear')
-
-
-class CreateTournament:
-    pass

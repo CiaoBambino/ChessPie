@@ -82,6 +82,7 @@ class TournamentMenu:
                     self.has_decided = True
                 case "2":
                     print("option2")
+                    controler.CreateTournament()
                     self.has_decided = True
                 case "3":
                     print("option3")
@@ -107,17 +108,22 @@ class TournamentMenu:
                     print("Cette option n'existe pas")
 
 
+class TournamentView:
+
+    def __init__(self) -> None:
+        pass
+
 
 class CreateTournamentView:
 
     def view():
         # user data and title must have same amount of elements
-        user_data = ["name", "first_name", "birthday", "note"]
-        title = ["nom : ", "prénom : ", "Date de naissance : ", "note : "]
-        base = " --CREER UN PROFIL--\n"
-        base += "Pour créer un nouveau profil de joueur veuillez "
-        base += "entrer ses informations personnels."
+        user_data = ["name", "place", "starting_date", "description"]
+        title = ["nom : ", "lieu : ", "date de début : ", "description : "]
+        base = " --CREER UN TOURNOIS--\n"
+        base += "Pour créer un Tournoi veuillez entrer ces informations."
         return user_data, title, base
+
 
 class RoundMenu:
 

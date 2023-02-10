@@ -10,15 +10,21 @@ class Tournament:
                  description=None,
                  tournament_id=None,
                  registered_players=None,
+                 actual_round=None,
                  rounds_list=None,
                  number_of_rounds=4):
-        
+
         Tournament.TOURNAMENT_ID += 1
-        self.tournament_id = Tournament.TOURNAMENT_ID
         self.name = name
         self.place = place
         self.starting_date = starting_date
         self.endingdate = ending_date
-        self.number_of_rounds = 
         self.description = description
-        self.registered_players = []
+        self.tournament_id = tournament_id
+        self.registered_players = registered_players
+        self.actual_round = actual_round
+        self.rounds_list = rounds_list
+        self.number_of_rounds = number_of_rounds
+
+        if tournament_id == None:
+            tournament_id = Tournament.TOURNAMENT_ID

@@ -32,33 +32,59 @@ class Controler:
         with open(path, 'a') as f:
             json.dump(objet, f, indent=2)
 
+    def cleaner(function):
+        def wrapper(*args, **kwargs):
 
-class CreatePlayer:
+            ClearTerminal()
+            result = function(*args, **kwargs)
 
-    def __init__(self):
+            return result
 
-        user_data, title, base = view.CreatePlayerView.view()
-        ClearTerminal()
+        wrapper.__doc__ = function.__doc__
+        return wrapper
+
+    @cleaner
+    def coordinate_input(user_data, title, base):
+
         print(base)
 
         for x in range(len(user_data)):
 
             user_data[x] = input(title[x])
-            line = CreatePlayer.proper_line(x, user_data, title)
+            line = Controler.proper_line(x, user_data, title)
             base += "\n"
             base += line
             ClearTerminal()
             print(base)
 
-        name, first_name, birthday, note = [*user_data]
-        new_player = player.Player(name, first_name, birthday, note)
-        Controler.JSONserialiser(new_player)
+        return user_data
 
     def proper_line(x, user_data, title):
         """get 2 strings, return 1 string
         by additionning them second value first"""
+
         text = title[x] + user_data[x]
         return text
+
+
+
+class CreateTournament:
+
+    def __init__(self):
+        pass
+
+
+class CreatePlayer:
+
+    def __init__(self):
+        # initialise the attributes from the view
+        user_data, title, base = view.CreatePlayerView.view()
+        # store the input into data
+        data = Controler.coordinate_input(user_data, title, base)
+        # unpack data and create a new player object
+        name, first_name, birthday, note = [*data]
+        new_player = player.Player(name, first_name, birthday, note)
+        Controler.JSONserialiser(new_player)
 
 
 class ClearTerminal:

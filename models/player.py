@@ -2,7 +2,6 @@ import time
 
 class Player:
 
-    CLASS_NAME = "player"
     TOTAL_PLAYER_NUMBER = 0
     TOTAL_PLAYER_LIST = []
     PLAYER_ID_INCREMENT = 0
@@ -27,8 +26,8 @@ class Player:
         self.TOTAL_PLAYER_LIST.append(self)
 
         if len(self.TOTAL_PLAYER_LIST) > 1:
-            print(self.TOTAL_PLAYER_LIST[1])
-            time.sleep(10)
+            print(self.TOTAL_PLAYER_LIST)
+            time.sleep(3)
 
     def __call__(self):
         return self.serializer()
@@ -65,7 +64,7 @@ class Player:
                       tournament_score)
 
     def __str__(self) -> str:
-        return self.first_name + " " + self.name + " " + self.player_id + " " + self.note
+        return self.first_name, self.name, self.player_id, self.note
 
     def __repr__(self) -> str:
         return "Utilisateur(prenom='{}', nom='{}')".format(self.first_name, self.name)

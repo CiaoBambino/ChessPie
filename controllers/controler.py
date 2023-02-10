@@ -1,6 +1,5 @@
 import json
 import os
-import time
 from os import system, name
 from views import view
 from models import player
@@ -29,12 +28,9 @@ class Controler:
         directory = "\data"
         directory_name = os.path.join(directory, name)
         path = os.getcwd() + directory_name
-        print(path)
-        time.sleep(10)
 
-        print("ici")
-        with open("path", 'a') as f:
-            json.dump(objet, f)
+        with open(path, 'a') as f:
+            json.dump(objet, f, indent=2)
 
 
 class CreatePlayer:
@@ -55,7 +51,7 @@ class CreatePlayer:
             print(base)
 
         name, first_name, birthday, note = [*user_data]
-        new_player = player.PLayer(name, first_name, birthday, note)
+        new_player = player.Player(name, first_name, birthday, note)
         Controler.JSONserialiser(new_player)
 
     def proper_line(x, user_data, title):

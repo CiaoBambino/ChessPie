@@ -1,0 +1,81 @@
+{
+  "name": "Boutet",
+  "first_name": "Franck",
+  "birthday": "10/05/1968",
+  "note": "aucune",
+  "player_id": 1,
+  "total_score": 0,
+  "tournament_score": 0
+}{
+  "name": "Fouché",
+  "first_name": "Maurice",
+  "birthday": "22/04/1974",
+  "note": "aucune",
+  "player_id": 2,
+  "total_score": 0,
+  "tournament_score": 0
+}{
+  "name": "Flantier",
+  "first_name": "No\u00ebl",
+  "birthday": "14/10/1987",
+  "note": "aucune",
+  "player_id": 1,
+  "total_score": 0,
+  "tournament_score": 0
+}{
+  "name": "Touchard",
+  "first_name": "Hugo",
+  "birthday": "24/05/1978",
+  "note": "aucune",
+  "player_id": 2,
+  "total_score": 0,
+  "tournament_score": 0
+}{
+  "name": "Bramard",
+  "first_name": "Lucien",
+  "birthday": "17/06/1994",
+  "note": "aucune",
+  "player_id": 3,
+  "total_score": 0,
+  "tournament_score": 0
+}{
+  "name": "Rodolphe",
+  "first_name": "Guilbert",
+  "birthday": "09/09/1982",
+  "note": "aucune",
+  "player_id": 4,
+  "total_score": 0,
+  "tournament_score": 0
+}{
+  "name": "Plantier",
+  "first_name": "Benjamin",
+  "birthday": "08/05/1962",
+  "note": "aucune",
+  "player_id": 5,
+  "total_score": 0,
+  "tournament_score": 0
+}{
+  "name": "Popelin",
+  "first_name": "Christophe",
+  "birthday": "03/12/2000",
+  "note": "aucune",
+  "player_id": 6,
+  "total_score": 0,
+  "tournament_score": 0
+}{
+  "name": "Girard",
+  "first_name": "Maxime",
+  "birthday": "09/10/2001",
+  "note": "aucune",
+  "player_id": 7,
+  "total_score": 0,
+  "tournament_score": 0
+}{
+  "name": "Crevier",
+  "first_name": "Th\u00e9o",
+  "birthday": "06/07/1993",
+  "note": "aucune",
+  "player_id": 8,
+  "total_score": 0,
+  "tournament_score": 0
+}

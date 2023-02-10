@@ -32,7 +32,7 @@ class Player:
 
     def __call__(self):
         return self.serializer()
-    
+
     def serializer(self):
 
         player_data = {}

@@ -113,10 +113,14 @@ class CreateTournament:
         user_data, title, base = view.CreateTournamentView.view()
         # store the inputs into data
         data = Controler.coordinate_input(user_data, title, base)
+        # load player from /data/player.json
+
         # unpack data and create a new tournament object
-        name, place, starting_date, description = [*data]
+        name, place, starting_date, ending_date, description = [*data]
         new_tournament = tournament.Tournament(name, place,
-                                               starting_date, description)
+                                               starting_date,
+                                               ending_date,
+                                               description)
         Controler.JSONserialiser(new_tournament)
 
 

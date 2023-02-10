@@ -124,19 +124,20 @@ class CreateTournamentView:
         base += "Pour créer un Tournoi veuillez entrer ces informations."
         return user_data, title, base
 
+
 class SelectPlayerView:
 
     def __init__(self, player_list):
-        
+        pass
 
     def view():
         # user_data and title must have same amount of elements
         user_data = ["name", "place", "starting_date", "description"]
         title = ["nom : ", "lieu : ", "date de début : ", "description : "]
         base = " --CREER UN TOURNOIS--\n"
-        base += "Pour créer un Tournoi veuillez choisir les joueurs."
+        base += "Ensuite veuillez choisir les joueurs."
         return user_data, title, base
-    
+
 
 class RoundMenu:
 

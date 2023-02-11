@@ -87,32 +87,6 @@ class Controler:
         time.sleep(10)
         return file
 
-    def JSONserialiser(Object):
-
-        objet = Object.serializer()
-
-        name = Object.__class__.__name__ + ".json"
-        directory = "\data"
-        directory_name = os.path.join(directory, name)
-        path = os.getcwd() + directory_name
-
-        with open(path, 'a') as f:
-            json.dump(objet, f)
-
-    def JSONunserializer(Object):
-
-        name = Object.__class__.__name__ + ".json"
-        directory = "\data"
-        directory_name = os.path.join(directory, name)
-        path = os.getcwd() + directory_name
-
-        with open(path, 'r') as rf:
-            objet = json.load(rf)
-
-        objet = Object.unserializer(objet)
-
-        return objet
-
     def cleaner(function):
         """Clean terminal and verify if user validate his entries"""
         def wrapper(*args, **kwargs):

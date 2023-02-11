@@ -8,8 +8,8 @@ class Tournament:
                  starting_date=None,
                  ending_date=None,
                  description=None,
-                 tournament_id=None,
                  registered_players=None,
+                 tournament_id=None,
                  actual_round=None,
                  rounds_list=None,
                  number_of_rounds=4):

@@ -60,11 +60,11 @@ class Controler:
 
         # create a list to stock the upcoming file
         new_file = []
-        Controler.copy_file(Object)
-        # Use class method of the object to get a dictionnary
+        # get a dictionnary
         objet = Object.serializer()
         path = Controler.get_path(Object)
         Controler.check_path(path)
+        Controler.copy_file(Object)
 
         with open(path, 'r') as rf:
             file = json.load(rf)
@@ -173,8 +173,7 @@ class CreateTournament:
         # store the inputs into data
         data = Controler.coordinate_input(user_data, title, base)
         # load player from /data/player.json
-        Player = player.Player()
-        players = Controler.json_deserialiser(Player)
+        players = Controler.json_deserialiser(player.Player)
         # select player to participate tournament
         view.SelectPlayerView(players)
         # unpack data and create a new tournament object

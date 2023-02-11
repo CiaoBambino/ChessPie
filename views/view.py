@@ -1,5 +1,7 @@
 from os import system, name
 from controllers import controler
+from tabulate import tabulate
+import time
 
 
 class MainMenu:
@@ -127,16 +129,14 @@ class CreateTournamentView:
 
 class SelectPlayerView:
 
-    def __init__(self, tournament_player_list):
-        self.registered_players = tournament_player_list
-
-    def view():
+    def view(registered_players):
         # user_data and title must have same amount of elements
         user_data = ["name", "place", "starting_date", "description"]
         title = ["nom : ", "lieu : ", "date de début : ", "description : "]
         base = " --CREER UN TOURNOIS--\n"
         base += "Ensuite veuillez choisir les joueurs."
-        print(self.registered_players)
+        print(registered_players)
+        time.sleep(5)
         return user_data, title, base
 
 

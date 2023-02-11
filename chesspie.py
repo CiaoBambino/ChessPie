@@ -6,10 +6,7 @@ from models import player
 def main():
 
     view = MainMenu()
-    chess = Controler(view)
-    chess.run()
-    #Controler.JSONserialiser()
-
+    Controler(view)
 
 
 if __name__ == "__main__":

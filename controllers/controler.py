@@ -21,6 +21,72 @@ class Controler:
     def get_player():
         pass
 
+    def get_path(Object):
+        """find the absolute path with the name of the object called"""
+
+        name = Object.__class__.__name__ + ".json"
+        directory = "\data"
+        directory_name = os.path.join(directory, name)
+        path = os.getcwd() + directory_name
+
+        return path
+
+    def check_path(path):
+        """Check if the path contain a file,
+        if not create a file with a List inside"""
+
+        check = os.path.isfile(path)
+        if check:
+            return
+        else:
+            objet = [{"Objet": "premier",
+                     "ne pas ": "supprimer", "don't": "delete"}]
+
+            with open(path, 'a') as f:
+                json.dump(objet, f)
+
+    def json_serialiser(Object):
+        """serialise an object at the end of a json file"""
+
+        # create a list to stock the upcoming file
+        new_file = []
+        # Use class method of the object to get a dictionnary
+        objet = Object.serializer()
+        path = Controler.get_path(Object)
+        Controler.check_path(path)
+
+        with open(path, 'r') as rf:
+            file = json.load(rf)
+
+        for elements in file:
+            new_file.append(elements)
+
+        new_file.append(objet)
+
+        # Serialise the final file with the new Object inside
+        with open(path, 'w') as f:
+            json.dump(new_file, f)
+
+    def json_deserialiser(Object):
+
+        file = []
+        # find the object file.json with his class name
+        name = Object.__class__.__name__ + ".json"
+        directory = "\data"
+        directory_name = os.path.join(directory, name)
+        path = os.getcwd() + directory_name
+
+        # open store the file into a variable
+        with open(path, 'r') as rf:
+            file = json.load(rf)
+
+        for objet in file:
+            file.append(Object.deserializer(objet))
+
+        print(file)
+        time.sleep(10)
+        return file
+
     def JSONserialiser(Object):
 
         objet = Object.serializer()
@@ -31,7 +97,7 @@ class Controler:
         path = os.getcwd() + directory_name
 
         with open(path, 'a') as f:
-            json.dump(objet, f, indent=2)
+            json.dump(objet, f)
 
     def JSONunserializer(Object):
 
@@ -42,7 +108,7 @@ class Controler:
 
         with open(path, 'r') as rf:
             objet = json.load(rf)
-        
+
         objet = Object.unserializer(objet)
 
         return objet
@@ -128,9 +194,10 @@ class CreateTournament:
         # store the inputs into data
         data = Controler.coordinate_input(user_data, title, base)
         # load player from /data/player.json
-        players = 
+        Player = player.Player()
+        players = Controler.JSONunserializer(Player)
         # select player to participate tournament
-
+        view.SelectPlayerView(players)
         # unpack data and create a new tournament object
         name, place, starting_date, ending_date, description = [*data]
         new_tournament = tournament.Tournament(name, place,
@@ -150,7 +217,7 @@ class CreatePlayer:
         # unpack data and create a new player object
         name, first_name, birthday, note = [*data]
         new_player = player.Player(name, first_name, birthday, note)
-        Controler.JSONserialiser(new_player)
+        Controler.json_serialiser(new_player)
 
 
 class ClearTerminal:

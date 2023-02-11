@@ -30,6 +30,7 @@ class Tournament:
             tournament_id = Tournament.TOURNAMENT_ID
 
     def serializer(self):
+        """Serialise the Object Tournament for the JSON file"""
 
         tournament_data = {}
         tournament_data['name'] = self.name
@@ -45,7 +46,8 @@ class Tournament:
 
         return tournament_data
 
-    def unserializer(self, tournament_data):
+    def deserializer(self, tournament_data):
+        """Deserialise the Object Tournament for the JSON file"""
 
         name = tournament_data['name']
         place = tournament_data['place']

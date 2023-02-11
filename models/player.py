@@ -7,10 +7,10 @@ class Player:
     TOTAL_PLAYER_LIST = []
     PLAYER_ID = 0
 
-    def __init__(self, name,
-                 first_name,
-                 birthday,
-                 note,
+    def __init__(self, name=None,
+                 first_name=None,
+                 birthday=None,
+                 note=None,
                  player_id=None,
                  total_score=None,
                  tournament_score=None):
@@ -26,14 +26,11 @@ class Player:
         self.note = note
         self.TOTAL_PLAYER_LIST.append(self)
 
-        if len(self.TOTAL_PLAYER_LIST) > 1:
-            print(self.TOTAL_PLAYER_LIST)
-            time.sleep(3)
-
     def __call__(self):
         return self.serializer()
 
     def serializer(self):
+        """Serialize the Object Player into a dictionnary"""
 
         player_data = {}
         player_data['name'] = self.name
@@ -46,7 +43,8 @@ class Player:
 
         return player_data
 
-    def unserializer(self, player_data):
+    def deserializer(self, player_data):
+        """Deserialize the Object Player from a dictionnary"""
 
         name = player_data['name']
         first_name = player_data['first_name']

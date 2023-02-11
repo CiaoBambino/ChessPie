@@ -21,7 +21,22 @@ class Controler:
         pass
 
     def get_player():
-        pass
+        """Get the list of players"""
+
+        player_list = []
+        name = "Player.json"
+        directory = "\data"
+        directory_name = os.path.join(directory, name)
+        path = os.getcwd() + directory_name
+        check = os.path.isfile(path)
+        if check: # peut etre modifier par try except plus tard
+            with open(path, 'r') as rf:
+                file = json.load(rf)
+
+            for elements in file:
+                player_list.append(elements)
+
+        return player_list
 
     def copy_file(Object):
         """Copy the file in the same directory
@@ -82,12 +97,10 @@ class Controler:
 
         file = []
         # find the object file.json with his class name
-        name = Object.__class__.__name__ + ".json"
-        directory = "\data"
-        directory_name = os.path.join(directory, name)
-        path = os.getcwd() + directory_name
+        path = Controler.get_path(Object)
+        print(path)
+        time.sleep(5)
 
-        # open store the file into file
         with open(path, 'r') as rf:
             file = json.load(rf)
 
@@ -172,10 +185,11 @@ class CreateTournament:
         user_data, title, base = view.CreateTournamentView.view()
         # store the inputs into data
         data = Controler.coordinate_input(user_data, title, base)
-        # load player from /data/player.json
-        players = Controler.json_deserialiser(player.Player)
+        # load player from /data/Player.json
+
+        players = Controler.get_player()
         # select player to participate tournament
-        view.SelectPlayerView(players)
+        view.SelectPlayerView.view(players)
         # unpack data and create a new tournament object
         name, place, starting_date, ending_date, description = [*data]
         new_tournament = tournament.Tournament(name, place,

@@ -127,8 +127,8 @@ class CreateTournamentView:
 
 class SelectPlayerView:
 
-    def __init__(self, player_list):
-        pass
+    def __init__(self, tournament_player_list):
+        self.registered_players = tournament_player_list
 
     def view():
         # user_data and title must have same amount of elements
@@ -136,6 +136,7 @@ class SelectPlayerView:
         title = ["nom : ", "lieu : ", "date de début : ", "description : "]
         base = " --CREER UN TOURNOIS--\n"
         base += "Ensuite veuillez choisir les joueurs."
+        print(self.registered_players)
         return user_data, title, base
 
 

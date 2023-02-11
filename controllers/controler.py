@@ -4,6 +4,8 @@ import os
 from os import system, name
 from views import view
 from models import player, tournament, round, match
+import shutil
+import re
 
 
 class Controler:
@@ -20,6 +22,14 @@ class Controler:
 
     def get_player():
         pass
+
+    def copy_file(Object):
+        """Copy the file in the same directory
+        adding Save at the end of the name"""
+
+        path = Controler.get_path(Object)
+        new_path = re.sub('.json', 'Save.json', path)
+        shutil.copyfile(path, new_path)
 
     def get_path(Object):
         """find the absolute path with the name of the object called"""
@@ -46,10 +56,11 @@ class Controler:
                 json.dump(objet, f)
 
     def json_serialiser(Object):
-        """serialise an object at the end of a json file"""
+        """serialize an object at the end of a json file"""
 
         # create a list to stock the upcoming file
         new_file = []
+        Controler.copy_file(Object)
         # Use class method of the object to get a dictionnary
         objet = Object.serializer()
         path = Controler.get_path(Object)
@@ -76,7 +87,7 @@ class Controler:
         directory_name = os.path.join(directory, name)
         path = os.getcwd() + directory_name
 
-        # open store the file into a variable
+        # open store the file into file
         with open(path, 'r') as rf:
             file = json.load(rf)
 
@@ -101,12 +112,6 @@ class Controler:
 
         wrapper.__doc__ = function.__doc__
         return wrapper
-
-    def input_checker(x, title):
-
-        entry = input(title[x])
-
-        return entry
 
     @cleaner
     def coordinate_input(user_data, title, base):
@@ -169,7 +174,7 @@ class CreateTournament:
         data = Controler.coordinate_input(user_data, title, base)
         # load player from /data/player.json
         Player = player.Player()
-        players = Controler.JSONunserializer(Player)
+        players = Controler.json_deserialiser(Player)
         # select player to participate tournament
         view.SelectPlayerView(players)
         # unpack data and create a new tournament object
@@ -178,7 +183,7 @@ class CreateTournament:
                                                starting_date,
                                                ending_date,
                                                description)
-        Controler.JSONserialiser(new_tournament)
+        Controler.json_serialiser(new_tournament)
 
 
 class CreatePlayer:

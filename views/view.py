@@ -137,9 +137,12 @@ class SelectPlayerView:
         base += "Ensuite veuillez choisir les joueurs."
 
         data = [["Nom", "Prénom", "ID Joueur"]]
-        data_row = []
-        
-        for player in range(len(registered_players)):
+
+        for d in registered_players[1:]:
+            data.append([d["name"], d["first_name"], d["player_id"]])
+
+        # old version, doing the same but lesser beautiful
+        """for player in range(len(registered_players)):
             for key in registered_players[player]:
                 if key == 'name':
                     data_row.append(registered_players[player]['name'])
@@ -149,7 +152,7 @@ class SelectPlayerView:
                     data_row.append(registered_players[player]['player_id'])
                     a = data_row.copy()
                     data += [a,]
-                    data_row.clear()
+                    data_row.clear()"""
         print(tabulate(data, headers='firstrow', tablefmt='fancy_grid'))
         return user_data, title, base
 

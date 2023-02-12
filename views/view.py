@@ -131,12 +131,26 @@ class SelectPlayerView:
 
     def view(registered_players):
         # user_data and title must have same amount of elements
-        user_data = ["name", "place", "starting_date", "description"]
-        title = ["nom : ", "lieu : ", "date de début : ", "description : "]
+        user_data = ["name", "first_name", "player_id"]
+        title = ["Nom", "Prénom", "Identifiant"]
         base = " --CREER UN TOURNOIS--\n"
         base += "Ensuite veuillez choisir les joueurs."
-        print(registered_players)
-        time.sleep(5)
+
+        data = [["Nom", "Prénom", "ID Joueur"]]
+        data_row = []
+        
+        for player in range(len(registered_players)):
+            for key in registered_players[player]:
+                if key == 'name':
+                    data_row.append(registered_players[player]['name'])
+                elif key == 'first_name':
+                    data_row.append(registered_players[player]['first_name'])
+                elif key == 'player_id':
+                    data_row.append(registered_players[player]['player_id'])
+                    a = data_row.copy()
+                    data += [a,]
+                    data_row.clear()
+        print(tabulate(data, headers='firstrow', tablefmt='fancy_grid'))
         return user_data, title, base
 
 

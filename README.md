@@ -1,5 +1,7 @@
 # ChessPie
 
+WORK IN PROGRESS
+
 program to create chess tournament
 
 TO DO :

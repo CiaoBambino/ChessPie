@@ -7,6 +7,7 @@ from models import player, tournament, round, match
 import shutil
 import re
 from tabulate import tabulate
+import random
 
 class Controler:
 
@@ -16,6 +17,11 @@ class Controler:
 
     def synchroniser():
         pass
+
+    def shuffle_ids(id_list):
+
+        return random.shuffle(id_list)
+
 
     def get_ids(tournament_player_list):
 
@@ -232,9 +238,6 @@ class RoundGenerator:
 
         if actual_round == 1:
 
-    
-
-    
 
 
 class CreateTournament:
@@ -247,8 +250,8 @@ class CreateTournament:
                                                ending_date, description,
                                                tournament_player_list)
         Controler.json_serialiser(new_tournament)
-
         # Run the tournament
+
 
     def init():
         # initialise the attributes from the view

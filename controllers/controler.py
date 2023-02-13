@@ -18,6 +18,23 @@ class Controler:
     def synchroniser():
         pass
 
+    def remove_first_index(tournament_player_list):
+        """Get a list as entry, 
+           return it without the first element"""
+        del tournament_player_list[0]
+        new_list = tournament_player_list
+        return new_list
+
+
+    def sort_by_score(tournament_player_list):
+        """Return a list sorted by higher score"""
+        liste = tournament_player_list
+        def get_tscore(element):
+            return element['tournament_score']
+    
+        liste.sort(key=get_tscore, reverse=True)
+        return liste
+
     def shuffle_ids(id_list):
 
         return random.shuffle(id_list)
@@ -26,7 +43,7 @@ class Controler:
     def get_ids(tournament_player_list):
 
         id_list = []
-        for p in tournament_player_list[1:]:
+        for p in tournament_player_list:
             id_list.append(p["player_id"])
         
         return id_list
@@ -233,10 +250,19 @@ class Controler:
 
 class RoundGenerator:
 
-    def __init__(self, player_list, actual_round, number_of_rounds):
-        """Generate pairs of match"""
+    def rounds_list_generator(player_list, actual_round):
+
+        new_player_list = Controler.remove_first_index(player_list)
 
         if actual_round == 1:
+            id_list = Controler.get_ids(new_player_list)
+            id_list = Controler.shuffle_ids(id_list)
+            return id_list
+
+        else:
+            Controler.sort_by_score(new_player_list)
+
+    def generate_pairs(player_list):
 
 
 
@@ -246,12 +272,11 @@ class CreateTournament:
 
         # Initialise the tournament
         name, place, starting_date, ending_date, description, tournament_player_list = self.init()
+        rounds_list = 
         new_tournament = tournament.Tournament(name, place, starting_date,
                                                ending_date, description,
                                                tournament_player_list)
         Controler.json_serialiser(new_tournament)
-        # Run the tournament
-
 
     def init():
         # initialise the attributes from the view

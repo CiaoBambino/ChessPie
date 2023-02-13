@@ -17,6 +17,14 @@ class Controler:
     def synchroniser():
         pass
 
+    def get_ids(tournament_player_list):
+
+        id_list = []
+        for p in tournament_player_list[1:]:
+            id_list.append(p["player_id"])
+        
+        return id_list
+
     def get_selected_player(player_id):
         """From a given player id return the player
            as a dictionnary"""
@@ -217,21 +225,16 @@ class Controler:
         return value
 
 
-class RunTournament:
+class RoundGenerator:
 
-    def calculate_player(player_list):
+    def __init__(self, player_list, actual_round, number_of_rounds):
+        """Generate pairs of match"""
 
-        counter = 0
-        is_pair = None
-        for p in player_list:
-            counter += 1
+        if actual_round == 1:
 
-        if counter % 2 == 0:
-            is_pair = True
-        else:
-            is_pair = False
+    
 
-        return counter, is_pair
+    
 
 
 class CreateTournament:
@@ -262,6 +265,19 @@ class CreateTournament:
 
         return name, place, starting_date, ending_date, description, tournament_player_list
 
+    def calculate_player(player_list):
+
+        counter = 0
+        is_pair = None
+        for p in player_list:
+            counter += 1
+
+        if counter % 2 == 0:
+            is_pair = True
+        else:
+            is_pair = False
+
+        return counter, is_pair
 
 class CreatePlayer:
 

@@ -1,6 +1,6 @@
 from os import system, name
 from controllers import controler
-from tabulate import tabulate
+
 import time
 
 
@@ -130,11 +130,9 @@ class CreateTournamentView:
 class SelectPlayerView:
 
     def view(registered_players):
-        # user_data and title must have same amount of elements
-        user_data = ["name", "first_name", "player_id"]
-        title = ["Nom", "Prénom", "Identifiant"]
+
         base = " --CREER UN TOURNOIS--\n"
-        base += "Ensuite veuillez choisir les joueurs."
+        base += "Veuillez ensuite choisir les joueurs. \n"
 
         data = [["Nom", "Prénom", "ID Joueur"]]
 
@@ -153,8 +151,7 @@ class SelectPlayerView:
                     a = data_row.copy()
                     data += [a,]
                     data_row.clear()"""
-        print(tabulate(data, headers='firstrow', tablefmt='fancy_grid'))
-        return user_data, title, base
+        return base, data
 
 
 class RoundMenu:

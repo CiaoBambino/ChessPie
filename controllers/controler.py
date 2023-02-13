@@ -6,7 +6,7 @@ from views import view
 from models import player, tournament, round, match
 import shutil
 import re
-
+from tabulate import tabulate
 
 class Controler:
 
@@ -14,14 +14,22 @@ class Controler:
 
         self.view = view
 
-    def run(self):
-        pass
-
     def synchroniser():
         pass
 
-    def get_player():
-        """Get the list of players"""
+    def get_selected_player(player_id):
+        """From a given player id return the player
+           as a dictionnary"""
+
+        # list of all players in Player.json
+        liste = Controler.get_player_list()
+        for p in liste[1:]:
+            if [p["player_id"]] == [player_id]:
+                selected_player = p
+                return selected_player
+
+    def get_player_list():
+        """Return a list of all players"""
 
         player_list = []
         name = "Player.json"
@@ -29,7 +37,7 @@ class Controler:
         directory_name = os.path.join(directory, name)
         path = os.getcwd() + directory_name
         check = os.path.isfile(path)
-        if check: # peut etre modifier par try except plus tard
+        if check:  # peut etre modifier par try except plus tard
             with open(path, 'r') as rf:
                 file = json.load(rf)
 
@@ -126,6 +134,8 @@ class Controler:
         wrapper.__doc__ = function.__doc__
         return wrapper
 
+    # COORDINATE_INPUT AND SELECT PLAYER ARE GETTING THE INPUT FROM USER
+
     @cleaner
     def coordinate_input(user_data, title, base):
 
@@ -141,6 +151,36 @@ class Controler:
             print(base)
 
         return user_data
+
+    def coordinate_input_select_player(base, data):
+
+        selected_players = []
+        has_finished = False
+
+        while not has_finished:
+
+            ClearTerminal()
+            print(base)
+            time.sleep(0)
+            print(tabulate(data, headers='firstrow', tablefmt='fancy_grid'))
+            player_id = int(input("Entrez l'Identifiant des joueurs à ajouter : "))
+            # VERIFIER SI L'ENTREE EST UNE NOMBRE ET PAS UN STRING
+            response = Controler.is_valid()
+
+            if response:
+                ClearTerminal()
+                selected_player = Controler.get_selected_player(player_id)
+                selected_players.append(selected_player)
+                print("Le joueur n°" + str(player_id) +
+                      " a été ajouté à la liste")
+                time.sleep(0.5)
+                print("Continuer d'ajouter des joueurs ?")
+                has_finished = not Controler.is_valid()
+                continue
+            else:
+                continue
+
+        return selected_players
 
     def proper_line(x, user_data, title):
         """get 2 strings, return 1 string
@@ -185,17 +225,18 @@ class CreateTournament:
         user_data, title, base = view.CreateTournamentView.view()
         # store the inputs into data
         data = Controler.coordinate_input(user_data, title, base)
-        # load player from /data/Player.json
-
-        players = Controler.get_player()
+        # load the list of all player from /data/Player.json
+        all_players = Controler.get_player_list()
         # select player to participate tournament
-        view.SelectPlayerView.view(players)
+        SPV_base, SPV_data = view.SelectPlayerView.view(all_players)
+        tournament_player_list = Controler.coordinate_input_select_player(SPV_base, SPV_data)
         # unpack data and create a new tournament object
         name, place, starting_date, ending_date, description = [*data]
         new_tournament = tournament.Tournament(name, place,
                                                starting_date,
                                                ending_date,
-                                               description)
+                                               description,
+                                               tournament_player_list)
         Controler.json_serialiser(new_tournament)
 
 

@@ -217,7 +217,35 @@ class Controler:
         return value
 
 
-class InitTournament:
+class RunTournament:
+
+    def calculate_player(player_list):
+
+        counter = 0
+        is_pair = None
+        for p in player_list:
+            counter += 1
+
+        if counter % 2 == 0:
+            is_pair = True
+        else:
+            is_pair = False
+
+        return counter, is_pair
+
+
+class CreateTournament:
+
+    def __init__(self):
+
+        # Initialise the tournament
+        name, place, starting_date, ending_date, description, tournament_player_list = self.init()
+        new_tournament = tournament.Tournament(name, place, starting_date,
+                                               ending_date, description,
+                                               tournament_player_list)
+        Controler.json_serialiser(new_tournament)
+
+        # Run the tournament
 
     def init():
         # initialise the attributes from the view
@@ -233,18 +261,6 @@ class InitTournament:
         name, place, starting_date, ending_date, description = [*data]
 
         return name, place, starting_date, ending_date, description, tournament_player_list
-
-class CreateTournament:
-
-    def __init__(self):
-
-        name, place, starting_date, ending_date, description, tournament_player_list = InitTournament.init()
-        new_tournament = tournament.Tournament(name, place, starting_date,
-                                               ending_date, description,
-                                               tournament_player_list)
-        print(new_tournament)
-        time.sleep(10)
-        Controler.json_serialiser(new_tournament)
 
 
 class CreatePlayer:

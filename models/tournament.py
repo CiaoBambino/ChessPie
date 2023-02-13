@@ -70,3 +70,9 @@ class Tournament:
                           actual_round,
                           rounds_list,
                           number_of_rounds)
+
+    def __str__(self) -> str:
+        return '%s %s %s'%(self.name, self.place, self.description)
+
+    def __repr__(self) -> str:
+        return "Tournois(nom='{}', lieu='{}', joueurs='{}')".format(self.name, self.place, self.registered_players)

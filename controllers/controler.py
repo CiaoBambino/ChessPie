@@ -173,7 +173,6 @@ class Controler:
                 selected_players.append(selected_player)
                 print("Le joueur n°" + str(player_id) +
                       " a été ajouté à la liste")
-                time.sleep(0.5)
                 print("Continuer d'ajouter des joueurs ?")
                 has_finished = not Controler.is_valid()
                 continue
@@ -218,9 +217,9 @@ class Controler:
         return value
 
 
-class CreateTournament:
+class InitTournament:
 
-    def __init__(self):
+    def init():
         # initialise the attributes from the view
         user_data, title, base = view.CreateTournamentView.view()
         # store the inputs into data
@@ -232,11 +231,19 @@ class CreateTournament:
         tournament_player_list = Controler.coordinate_input_select_player(SPV_base, SPV_data)
         # unpack data and create a new tournament object
         name, place, starting_date, ending_date, description = [*data]
-        new_tournament = tournament.Tournament(name, place,
-                                               starting_date,
-                                               ending_date,
-                                               description,
+
+        return name, place, starting_date, ending_date, description, tournament_player_list
+
+class CreateTournament:
+
+    def __init__(self):
+
+        name, place, starting_date, ending_date, description, tournament_player_list = InitTournament.init()
+        new_tournament = tournament.Tournament(name, place, starting_date,
+                                               ending_date, description,
                                                tournament_player_list)
+        print(new_tournament)
+        time.sleep(10)
         Controler.json_serialiser(new_tournament)
 
 

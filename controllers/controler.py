@@ -3,7 +3,7 @@ import time
 import os
 from os import system, name
 from views import view
-from models import player, tournament, round, match
+from models import player, tournament, rounde, match
 import shutil
 import re
 from tabulate import tabulate
@@ -35,11 +35,10 @@ class Controler:
 
         liste.sort(key=get_tscore, reverse=True)
         return liste
-    
-    def shuffle_list(liste)
-        
-        return random.shuffle(liste)
 
+    def shuffle_list(liste):
+
+        return random.shuffle(liste)
 
     def get_score(player):
         score = None
@@ -256,7 +255,16 @@ class Controler:
         return value
 
 
-class RoundGenerator:
+class CreateRounds:
+
+    def rounds_list_generator(number_of_rounds):
+        """Return a list sized for the number of rounds needed"""
+        rounds_list = []
+
+        for i in range(number_of_rounds):
+            rounds_list.append([])
+
+        return rounds_list
 
     def round_generator(liste, actual_round):
         """generate the round"""
@@ -265,12 +273,12 @@ class RoundGenerator:
 
         if actual_round == 1:
             player_list = Controler.shuffle_ids(player_list)
-            match_list, player_impair = RoundGenerator.create_match_list(player_list)
+            match_list, player_impair = CreateRounds.create_match_list(player_list)
             return match_list, player_impair
 
         else:
             Controler.sort_by_score(player_list)
-            match_list, player_impair = RoundGenerator.create_match_list(player_list)
+            match_list, player_impair = CreateRounds.create_match_list(player_list)
             return match_list, player_impair
 
     def create_match_list(player_list):
@@ -291,7 +299,7 @@ class RoundGenerator:
                 pair2.append(player_list[j])
 
             for p1, p2 in zip(pair1, pair2):
-                matche = RoundGenerator.create_match(p1, p2)
+                matche = CreateRounds.create_match(p1, p2)
                 match_list.append(matche)
 
             return match_list, impaire_p
@@ -307,7 +315,7 @@ class RoundGenerator:
                 pair2.append(player_list[j])
 
             for p1, p2 in zip(pair1, pair2):
-                paire = RoundGenerator.create_match(p1, p2)
+                paire = CreateRounds.create_match(p1, p2)
                 match_list.append(paire)
 
             return match_list, impaire_p
@@ -331,6 +339,13 @@ class CreateTournament:
                                                ending_date, description,
                                                tournament_player_list)
         Controler.json_serialiser(new_tournament)
+
+    def run(tournament):
+
+        
+        for i in rounds_list:
+            actual_round = (i += 1)
+            tour = round.Round(actual_round,)
 
     def init():
         # initialise the attributes from the view

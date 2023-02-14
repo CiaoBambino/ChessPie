@@ -4,9 +4,9 @@ from models import tournament
 class Round:
 
     def __init__(self, actual_round,
-                 starting_time,
-                 ending_time,
                  match_list,
+                 starting_time=None,
+                 ending_time=None,
                  note=None):
 
         self.actual_round = tournament.Tournament.actual_round

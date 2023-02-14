@@ -4,7 +4,7 @@ from models import tournament
 class Round:
 
     def __init__(self, actual_round,
-                 match_list,
+                 match_list=None,
                  starting_time=None,
                  ending_time=None,
                  note=None):

@@ -9,11 +9,12 @@ class Tournament:
                  ending_date=None,
                  description=None,
                  registered_players=None,
-                 tournament_id=None,
-                 actual_round=None,
+                 number_of_rounds=4,
                  rounds_list=None,
-                 number_of_rounds=4):
+                 actual_round=None,
+                 tournament_id=None):
 
+        # je crois que actual round et tournament id n'ont rien a faire dans le constructeur
         Tournament.TOURNAMENT_ID += 1
         self.name = name
         self.place = place

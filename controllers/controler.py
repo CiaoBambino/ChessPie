@@ -334,18 +334,18 @@ class CreateTournament:
     def __init__(self):
 
         # Initialise the tournament
-        name, place, starting_date, ending_date, description, tournament_player_list = CreateTournament.init()
+        name, place, starting_date, ending_date, description, tournament_player_list, number_of_rounds = CreateTournament.init()
         new_tournament = tournament.Tournament(name, place, starting_date,
                                                ending_date, description,
-                                               tournament_player_list)
+                                               tournament_player_list, number_of_rounds)
         Controler.json_serialiser(new_tournament)
 
     def run(tournament):
 
-        
-        for i in rounds_list:
-            actual_round = (i += 1)
-            tour = round.Round(actual_round,)
+        for i in tournament.rounds_list:
+            actual_round = i
+            actual_round += 1
+            tour = rounde.Round(actual_round, match_list)
 
     def init():
         # initialise the attributes from the view
@@ -358,9 +358,9 @@ class CreateTournament:
         SPV_base, SPV_data = view.SelectPlayerView.view(all_players)
         tournament_player_list = Controler.coordinate_input_select_player(SPV_base, SPV_data)
         # unpack data and create a new tournament object
-        name, place, starting_date, ending_date, description = [*data]
+        name, place, starting_date, ending_date, description, number_of_rounds = [*data]
 
-        return name, place, starting_date, ending_date, description, tournament_player_list
+        return name, place, starting_date, ending_date, description, tournament_player_list, number_of_rounds
 
     def calculate_player(player_list):
         """Return number of player in list and if it's pair"""

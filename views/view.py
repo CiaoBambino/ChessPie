@@ -120,8 +120,10 @@ class CreateTournamentView:
 
     def view():
         # user_data and title must have same amount of elements
-        user_data = ["name", "place", "starting_date", "ending_date", "description"]
-        title = ["nom : ", "lieu : ", "date de début : ", "date de fin : ", "description : "]
+        user_data = ["name", "place", "starting_date",
+                     "ending_date", "description", "number_of_rounds"]
+        title = ["nom : ", "lieu : ", "date de début : ",
+                 "date de fin : ", "description : ", "nombre de tours : "]
         base = " --CREER UN TOURNOIS--\n"
         base += "Pour créer un Tournoi veuillez entrer ces informations."
         return user_data, title, base

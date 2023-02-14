@@ -1,5 +1,6 @@
 import json
 import time
+import datetime
 import os
 from os import system, name
 from views import view
@@ -38,7 +39,8 @@ class Controler:
 
     def shuffle_list(liste):
 
-        return random.shuffle(liste)
+        shuffled = random.sample(liste, len(liste))
+        return shuffled
 
     def get_score(player):
         score = None
@@ -258,7 +260,8 @@ class Controler:
 class CreateRounds:
 
     def rounds_list_generator(number_of_rounds):
-        """Return a list sized for the number of rounds needed"""
+        """Return an empty list
+           sized for the number of rounds"""
         rounds_list = []
 
         for i in range(number_of_rounds):
@@ -268,18 +271,17 @@ class CreateRounds:
 
     def round_generator(liste, actual_round):
         """generate the round"""
-
-        player_list = Controler.remove_first_index(liste)
+        # A CONTINUER
 
         if actual_round == 1:
-            player_list = Controler.shuffle_ids(player_list)
-            match_list, player_impair = CreateRounds.create_match_list(player_list)
-            return match_list, player_impair
+            player_list = Controler.shuffle_list(liste)
+            match_liste, player_impair = CreateRounds.create_match_list(player_list)
+            return match_liste, player_impair
 
         else:
             Controler.sort_by_score(player_list)
-            match_list, player_impair = CreateRounds.create_match_list(player_list)
-            return match_list, player_impair
+            match_liste, player_impair = CreateRounds.create_match_list(player_list)
+            return match_liste, player_impair
 
     def create_match_list(player_list):
         """Return a list of match and the impaire player
@@ -334,20 +336,46 @@ class CreateTournament:
     def __init__(self):
 
         # Initialise the tournament
-        name, place, starting_date, ending_date, description, tournament_player_list, number_of_rounds = CreateTournament.init()
-        new_tournament = tournament.Tournament(name, place, starting_date,
-                                               ending_date, description,
-                                               tournament_player_list, number_of_rounds)
+        name, place, starting_date, ending_date, description, tournament_player_list, number_of_rounds, rounds_list = CreateTournament.init()
+        new_tournament = tournament.Tournament(name,
+                                               place,
+                                               starting_date,
+                                               ending_date,
+                                               description,
+                                               tournament_player_list,
+                                               number_of_rounds,
+                                               rounds_list)
         Controler.json_serialiser(new_tournament)
+        CreateTournament.run(new_tournament)
 
     def run(tournament):
 
-        for i in tournament.rounds_list:
-            actual_round = i
-            actual_round += 1
-            tour = rounde.Round(actual_round, match_list)
+        number_player, is_pair = CreateTournament.calculate_player(tournament.registered_players)
+        view.TournamentView.view(tournament.name, number_player)
+        check = Controler.is_valid()
+
+        if check:
+            i = tournament.actual_round
+            j = i - 1
+            for rounds in tournament.rounds_list[j:]:
+
+                starting_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                liste = tournament.registered_players
+                match_list, impair_p = CreateRounds.round_generator(liste, i)
+                new_round = rounde.Round(i, match_list, starting_time)
+                rounds.append(new_round)
+                view.RoundMenu.view(tournament.name, str(i), match_list)
+                check2 = Controler.is_valid()
+                # afficher la vue et demander lancer ou pas
+        else:
+            view.TournamentMenu()
+
+        
 
     def init():
+        """All the variable necessary to create
+           an object Tournament are collected here"""
+
         # initialise the attributes from the view
         user_data, title, base = view.CreateTournamentView.view()
         # store the inputs into data
@@ -359,8 +387,10 @@ class CreateTournament:
         tournament_player_list = Controler.coordinate_input_select_player(SPV_base, SPV_data)
         # unpack data and create a new tournament object
         name, place, starting_date, ending_date, description, number_of_rounds = [*data]
+        number_of_rounds = int(number_of_rounds)
+        rounds_list = CreateRounds.rounds_list_generator(number_of_rounds)
 
-        return name, place, starting_date, ending_date, description, tournament_player_list, number_of_rounds
+        return name, place, starting_date, ending_date, description, tournament_player_list, number_of_rounds, rounds_list
 
     def calculate_player(player_list):
         """Return number of player in list and if it's pair"""
@@ -369,7 +399,6 @@ class CreateTournament:
         is_pair = None
         for p in player_list:
             counter += 1
-
         if counter % 2 == 0:
             is_pair = True
         else:

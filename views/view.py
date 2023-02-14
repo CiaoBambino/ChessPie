@@ -1,5 +1,6 @@
 from os import system, name
 from controllers import controler
+from tabulate import tabulate
 
 import time
 
@@ -62,12 +63,11 @@ class TournamentMenu:
 
         ClearTerminal()
         print("\n --TOURNOIS-- \n")
-        print("[1] -TOURS-")
-        print("[2] CREER UN TOURNOI")
-        print("[3] CHARGER UN TOURNOI")
-        print("[4] MODIFIER UN TOURNOI")
-        print("[5] SUPPRIMER UN TOURNOI")
-        print("[6] RETOUR")
+        print("[1] CREER UN TOURNOI")
+        print("[2] CHARGER UN TOURNOI")
+        print("[3] MODIFIER UN TOURNOI")
+        print("[4] SUPPRIMER UN TOURNOI")
+        print("[5] RETOUR")
         print("[q] quitter" + "      " +
               "[n]nettoyer" + "      " +
               "[s]sauvegarder")
@@ -80,11 +80,10 @@ class TournamentMenu:
 
             match user_choice:
                 case "1":
-                    print("option1")
+                    controler.CreateTournament()
                     self.has_decided = True
                 case "2":
                     print("option2")
-                    controler.CreateTournament()
                     self.has_decided = True
                 case "3":
                     print("option3")
@@ -93,9 +92,6 @@ class TournamentMenu:
                     print("option4")
                     self.has_decided = True
                 case "5":
-                    print("option5")
-                    self.has_decided = True
-                case "6":
                     ClearTerminal()
                     MainMenu()
                     self.has_decided = True
@@ -112,8 +108,12 @@ class TournamentMenu:
 
 class TournamentView:
 
-    def __init__(self) -> None:
-        pass
+    def view(name, number_of_player):
+        base = " --TOURNOIS--\n"
+        base += str(name.upper()) + "\n"
+        base += str(number_of_player) + " participants\n"
+        base += "Lancer le tournoi ..."
+        print(base)
 
 
 class CreateTournamentView:
@@ -207,6 +207,15 @@ class RoundMenu:
                     print("option7")
                 case _:
                     print("Cette option n'existe pas")
+
+    def view(name, actual_round, match_list):  # [1] AFFICHER LES TOURS
+        base = " --TOURNOIS--\n"
+        base += str(name.upper()) + "\n\n"
+        base += "ROUND N°{tour}".format(tour=actual_round)
+        data = [["Nom", "Prénom", "ID Joueur"]]
+        print(tabulate(match_list, tablefmt='fancy_grid'))
+        print("Commencer le Round ?")
+
 
 
 class MatchMenu:

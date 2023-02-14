@@ -15,3 +15,9 @@ class Round:
         self.ending_time = ending_time
         self.match_list = match_list
         self.note = note
+
+    def __str__(self) -> str:
+        return "ROUND N°" + self.actual_round
+
+    def __repr__(self) -> str:
+        return "ROUND ({})".format(self.actual_round)

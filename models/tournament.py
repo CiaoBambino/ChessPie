@@ -10,25 +10,19 @@ class Tournament:
                  description=None,
                  registered_players=None,
                  number_of_rounds=4,
-                 rounds_list=None,
-                 actual_round=None,
-                 tournament_id=None):
+                 rounds_list=None):
 
-        # je crois que actual round et tournament id n'ont rien a faire dans le constructeur
         Tournament.TOURNAMENT_ID += 1
         self.name = name
         self.place = place
         self.starting_date = starting_date
         self.ending_date = ending_date
         self.description = description
-        self.tournament_id = tournament_id
+        self.tournament_id = Tournament.TOURNAMENT_ID
         self.registered_players = registered_players
-        self.actual_round = actual_round
-        self.rounds_list = rounds_list
+        self.actual_round = 1
         self.number_of_rounds = number_of_rounds
-
-        if tournament_id is None:
-            tournament_id = Tournament.TOURNAMENT_ID
+        self.rounds_list = rounds_list
 
     def serializer(self):
         """Serialise the Object Tournament for the JSON file"""

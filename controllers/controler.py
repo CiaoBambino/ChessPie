@@ -49,6 +49,27 @@ class Controler:
 
         return score
 
+    def get_actual_round(tournoi):
+        """get the round of a tournament !"""
+
+        actual_round = None
+        the_tournament = []
+        name = "Tournament.json"
+        directory = "\data"
+        directory_name = os.path.join(directory, name)
+        path = os.getcwd() + directory_name
+        check = os.path.isfile(path)
+        if check:  # peut etre modifier par try except plus tard
+            with open(path, 'r') as rf:
+                the_tournament = json.load(rf)
+                print(the_tournament)
+                print("get actual round ___________")
+
+            for item in the_tournament[1:]:
+                actual_round = item["actual_round"]
+
+        return actual_round
+
     def get_ids(player_list):
 
         id_list = []
@@ -346,31 +367,30 @@ class CreateTournament:
                                                number_of_rounds,
                                                rounds_list)
         Controler.json_serialiser(new_tournament)
+
         CreateTournament.run(new_tournament)
 
-    def run(tournament):
+    def run(tournois):
 
-        number_player, is_pair = CreateTournament.calculate_player(tournament.registered_players)
-        view.TournamentView.view(tournament.name, number_player)
+        number_player, is_pair = CreateTournament.calculate_player(tournois.registered_players)
+        view.TournamentView.view(tournois.name, number_player)
         check = Controler.is_valid()
 
         if check:
-            i = tournament.actual_round
+            i = Controler.get_actual_round(tournois)
             j = i - 1
-            for rounds in tournament.rounds_list[j:]:
+            for rounds in tournois.rounds_list[j:]:
 
                 starting_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                liste = tournament.registered_players
+                liste = tournois.registered_players
                 match_list, impair_p = CreateRounds.round_generator(liste, i)
                 new_round = rounde.Round(i, match_list, starting_time)
                 rounds.append(new_round)
-                view.RoundMenu.view(tournament.name, str(i), match_list)
+                view.RoundMenu.view(tournois.name, str(i), match_list)
                 check2 = Controler.is_valid()
                 # afficher la vue et demander lancer ou pas
         else:
             view.TournamentMenu()
-
-        
 
     def init():
         """All the variable necessary to create

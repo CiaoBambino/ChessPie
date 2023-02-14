@@ -10,7 +10,8 @@ class Tournament:
                  description=None,
                  registered_players=None,
                  number_of_rounds=4,
-                 rounds_list=None):
+                 rounds_list=None,
+                 actual_round=1):
 
         Tournament.TOURNAMENT_ID += 1
         self.name = name
@@ -20,9 +21,13 @@ class Tournament:
         self.description = description
         self.tournament_id = Tournament.TOURNAMENT_ID
         self.registered_players = registered_players
-        self.actual_round = 1
         self.number_of_rounds = number_of_rounds
         self.rounds_list = rounds_list
+        self.actual_round = actual_round
+
+    def __iter__(self):
+        for each in self.__dict__.values():
+              yield each
 
     def serializer(self):
         """Serialise the Object Tournament for the JSON file"""

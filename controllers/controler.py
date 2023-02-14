@@ -25,13 +25,12 @@ class Controler:
         new_list = tournament_player_list
         return new_list
 
-
     def sort_by_score(tournament_player_list):
         """Return a list sorted by higher score"""
         liste = tournament_player_list
         def get_tscore(element):
             return element['tournament_score']
-    
+
         liste.sort(key=get_tscore, reverse=True)
         return liste
 
@@ -39,11 +38,18 @@ class Controler:
 
         return random.shuffle(id_list)
 
+    def get_score(player):
+        score = None
+        for item in player:
+            score = item["player_id"]
 
-    def get_ids(tournament_player_list):
+        return score
+
+
+    def get_ids(player_list):
 
         id_list = []
-        for p in tournament_player_list:
+        for p in player_list:
             id_list.append(p["player_id"])
         
         return id_list
@@ -257,13 +263,49 @@ class RoundGenerator:
         if actual_round == 1:
             id_list = Controler.get_ids(new_player_list)
             id_list = Controler.shuffle_ids(id_list)
-            return id_list
+            
 
         else:
             Controler.sort_by_score(new_player_list)
 
-    def generate_pairs(player_list):
+    def create_match_list(player_list):
 
+        match_list = []
+        nb, is_pair = CreateTournament.calculate_player(player_list)
+        pair1 = []
+        pair2 = []
+
+        if is_pair:
+            for i in range(0, nb, 2):
+                pair1.append(player_list[i])
+
+            for j in range(1, nb, 2):
+                pair2.append(player_list[j])
+
+            for p1, p2 in zip(pair1, pair2):
+                paire = RoundGenerator.create_match(p1, p2)
+                match_list.append(paire)
+
+        else:
+            for i in range(0, nb, 2):
+                pair1.append(player_list[i])
+
+            for j in range(1, nb, 2):
+                pair2.append(player_list[j])
+
+            for p1, p2 in zip(pair1, pair2):
+                paire = RoundGenerator.create_match(p1, p2)
+                match_list.append(paire)
+
+        return match_list
+
+    def create_match(player_one, player_two):
+
+        p1_score = 0
+        p2_score = 0
+
+        matche = match.Match(player_one, p1_score, player_two, p2_score)
+        return matche
 
 
 class CreateTournament:
@@ -271,8 +313,7 @@ class CreateTournament:
     def __init__(self):
 
         # Initialise the tournament
-        name, place, starting_date, ending_date, description, tournament_player_list = self.init()
-        rounds_list = 
+        name, place, starting_date, ending_date, description, tournament_player_list = CreateTournament.init()
         new_tournament = tournament.Tournament(name, place, starting_date,
                                                ending_date, description,
                                                tournament_player_list)
@@ -294,6 +335,7 @@ class CreateTournament:
         return name, place, starting_date, ending_date, description, tournament_player_list
 
     def calculate_player(player_list):
+        """Return number of player in list and if it's pair"""
 
         counter = 0
         is_pair = None
@@ -306,6 +348,7 @@ class CreateTournament:
             is_pair = False
 
         return counter, is_pair
+
 
 class CreatePlayer:
 

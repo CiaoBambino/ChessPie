@@ -9,6 +9,7 @@ import re
 from tabulate import tabulate
 import random
 
+
 class Controler:
 
     def __init__(self, view):
@@ -28,15 +29,17 @@ class Controler:
     def sort_by_score(tournament_player_list):
         """Return a list sorted by higher score"""
         liste = tournament_player_list
+
         def get_tscore(element):
             return element['tournament_score']
 
         liste.sort(key=get_tscore, reverse=True)
         return liste
+    
+    def shuffle_list(liste)
+        
+        return random.shuffle(liste)
 
-    def shuffle_ids(id_list):
-
-        return random.shuffle(id_list)
 
     def get_score(player):
         score = None
@@ -45,13 +48,12 @@ class Controler:
 
         return score
 
-
     def get_ids(player_list):
 
         id_list = []
         for p in player_list:
             id_list.append(p["player_id"])
-        
+
         return id_list
 
     def get_selected_player(player_id):
@@ -256,24 +258,30 @@ class Controler:
 
 class RoundGenerator:
 
-    def rounds_list_generator(player_list, actual_round):
+    def round_generator(liste, actual_round):
+        """generate the round"""
 
-        new_player_list = Controler.remove_first_index(player_list)
+        player_list = Controler.remove_first_index(liste)
 
         if actual_round == 1:
-            id_list = Controler.get_ids(new_player_list)
-            id_list = Controler.shuffle_ids(id_list)
-            
+            player_list = Controler.shuffle_ids(player_list)
+            match_list, player_impair = RoundGenerator.create_match_list(player_list)
+            return match_list, player_impair
 
         else:
-            Controler.sort_by_score(new_player_list)
+            Controler.sort_by_score(player_list)
+            match_list, player_impair = RoundGenerator.create_match_list(player_list)
+            return match_list, player_impair
 
     def create_match_list(player_list):
+        """Return a list of match and the impaire player
+           that is =None by default"""
 
-        match_list = []
         nb, is_pair = CreateTournament.calculate_player(player_list)
+        match_list = []
         pair1 = []
         pair2 = []
+        impaire_p = None
 
         if is_pair:
             for i in range(0, nb, 2):
@@ -283,12 +291,17 @@ class RoundGenerator:
                 pair2.append(player_list[j])
 
             for p1, p2 in zip(pair1, pair2):
-                paire = RoundGenerator.create_match(p1, p2)
-                match_list.append(paire)
+                matche = RoundGenerator.create_match(p1, p2)
+                match_list.append(matche)
+
+            return match_list, impaire_p
 
         else:
             for i in range(0, nb, 2):
                 pair1.append(player_list[i])
+
+            impaire_p = pair1[-1]
+            del pair1[-1]
 
             for j in range(1, nb, 2):
                 pair2.append(player_list[j])
@@ -297,7 +310,7 @@ class RoundGenerator:
                 paire = RoundGenerator.create_match(p1, p2)
                 match_list.append(paire)
 
-        return match_list
+            return match_list, impaire_p
 
     def create_match(player_one, player_two):
 

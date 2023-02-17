@@ -2,7 +2,7 @@ from os import system, name
 from controllers import controler
 from tabulate import tabulate
 
-import time
+from time import sleep
 
 
 class MainMenu:

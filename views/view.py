@@ -14,7 +14,6 @@ class MainMenu:
         print("[1] TOURNOIS")
         print("[2] JOUEURS")
         print("[3] RAPPORTS")
-        print("[4] REGLAGES")
         print("[q] quitter" + "      " +
               "[n]nettoyer" + "      " +
               "[s]sauvegarder")
@@ -37,10 +36,6 @@ class MainMenu:
                 case "3":
                     ClearTerminal()
                     RapportMenu()
-                    self.has_decided = True
-                case "4":
-                    ClearTerminal()
-                    SettingMenu()
                     self.has_decided = True
                 case "q" | "Q" | "quit" | "quitt" | "quitter" | "Quitter":
                     exit()
@@ -65,9 +60,7 @@ class TournamentMenu:
         print("\n --TOURNOIS-- \n")
         print("[1] CREER UN TOURNOI")
         print("[2] CHARGER UN TOURNOI")
-        print("[3] MODIFIER UN TOURNOI")
-        print("[4] SUPPRIMER UN TOURNOI")
-        print("[5] RETOUR")
+        print("[3] RETOUR")
         print("[q] quitter" + "      " +
               "[n]nettoyer" + "      " +
               "[s]sauvegarder")
@@ -86,12 +79,6 @@ class TournamentMenu:
                     print("option2")
                     self.has_decided = True
                 case "3":
-                    print("option3")
-                    self.has_decided = True
-                case "4":
-                    print("option4")
-                    self.has_decided = True
-                case "5":
                     ClearTerminal()
                     MainMenu()
                     self.has_decided = True
@@ -213,7 +200,7 @@ class RoundMenu:
         base = " --TOURNOIS--\n"
         base += str(name.upper()) + "\n\n"
         base += "ROUND N°{tour}\n".format(tour=actual_round)
-        base += "Le tour à débuter le : "str(starting_time)
+        base += "Le tour à débuter le : ", str(starting_time)
         base += "Quand tout les joueurs auront fini leurs parties entrez << oui >>"
         print(base)
 
@@ -222,61 +209,11 @@ class RoundMenu:
         base = " --TOURNOIS--\n"
         base += str(name.upper()) + "\n\n"
         base += "ROUND N°{tour}\n".format(tour=actual_round)
-        base += "Le tour à fini le : "str(ending_time)
+        base += "Le tour à fini le : ", str(ending_time)
         base += "Veuillez entrer les résultat du tour pour chaque joueurs"
         print(base)
 
         return result
-        
-
-
-class MatchMenu:
-
-    def __init__(self):
-
-        ClearTerminal()
-        print("\n --MATCH-- \n")
-        print("[1] AFFICHER LES MATCH")
-        print("[2] MODIFIER UN MATCH")
-        print("[3] SUPPRIMER UN MATCH")
-        print("[4] CREER UN MATCH")
-        print("[5] RETOUR")
-        print("[q] quitter" + "      " +
-              "[n] nettoyer" + "      " +
-              "[s] sauvegarder")
-
-        self.has_decided = False
-
-        while not self.has_decided:
-
-            user_choice = input("\n Entrez votre choix : ")
-
-            match user_choice:
-                case "1":
-                    print("option1")
-                    self.has_decided = True
-                case "2":
-                    print("option2")
-                    self.has_decided = True
-                case "3":
-                    print("option3")
-                    self.has_decided = True
-                case "4":
-                    print("option4")
-                    self.has_decided = True
-                case "5":
-                    ClearTerminal()
-                    RoundMenu()
-                    self.has_decided = True
-                case "q" | "Q" | "quit" | "quitt" | "quitter" | "Quitter":
-                    exit()
-                case "n":
-                    MatchMenu()
-                    self.has_decided = True
-                case "s":
-                    print("option7")
-                case _:
-                    print("Cette option n'existe pas")
 
 
 class PlayerMenu:
@@ -286,10 +223,8 @@ class PlayerMenu:
         ClearTerminal()
         print("\n --JOUEURS-- \n")
         print("[1] LISTE COMPLETE")
-        print("[2] MODIFIER UN JOUEUR")
-        print("[3] SUPPRIMER UN JOUEUR")
-        print("[4] CREER UN PROFIL")
-        print("[5] RETOUR")
+        print("[2] CREER UN PROFIL")
+        print("[3] RETOUR")
         print("[q] quitter" + "      " +
               "[n] nettoyer" + "      " +
               "[s] sauvegarder")
@@ -305,16 +240,10 @@ class PlayerMenu:
                     print("option1")
                     self.has_decided = True
                 case "2":
-                    print("option2")
-                    self.has_decided = True
-                case "3":
-                    print("option3")
-                    self.has_decided = True
-                case "4":
                     controler.CreatePlayer()
                     self.has_decided = True
                     PlayerMenu()
-                case "5":
+                case "3":
                     ClearTerminal()
                     MainMenu()
                     self.has_decided = True
@@ -391,63 +320,6 @@ class RapportMenu:
                     exit()
                 case "n":
                     RapportMenu()
-                    self.has_decided = True
-                case "s":
-                    print("option7")
-                case _:
-                    print("Cette option n'existe pas")
-
-
-class SettingMenu:
-
-    def __init__(self):
-
-        ClearTerminal()
-        print("\n --REGLAGES-- \n")
-        print("[1] REGLAGE 1")
-        print("[2] REGLAGE 2")
-        print("[3] REGLAGE 3")
-        print("[4] REGLAGE 4")
-        print("[5] REGLAGE 5")
-        print("[6] REGLAGE 6")
-        print("[7] RETOUR")
-        print("[q] quitter" + "      " +
-              "[n] nettoyer" + "      " +
-              "[s] sauvegarder")
-
-        self.has_decided = False
-
-        while not self.has_decided:
-
-            user_choice = input("\n Entrez votre choix : ")
-
-            match user_choice:
-                case "1":
-                    print("option1")
-                    self.has_decided = True
-                case "2":
-                    print("option2")
-                    self.has_decided = True
-                case "3":
-                    print("option3")
-                    self.has_decided = True
-                case "4":
-                    print("option4")
-                    self.has_decided = True
-                case "5":
-                    print("option5")
-                    self.has_decided = True
-                case "6":
-                    print("option6")
-                    self.has_decided = True
-                case "7":
-                    ClearTerminal()
-                    MainMenu()
-                    self.has_decided = True
-                case "q" | "Q" | "quit" | "quitt" | "quitter" | "Quitter":
-                    exit()
-                case "n":
-                    SettingMenu()
                     self.has_decided = True
                 case "s":
                     print("option7")

@@ -195,21 +195,24 @@ class RoundMenu:
             print(str(i), " : ", matches)
             i += 1
         print("Commencer le Round ?")
-    
+
     def round_start(name, actual_round, starting_time):
+
+        ClearTerminal()
         base = " --TOURNOIS--\n"
         base += str(name.upper()) + "\n\n"
         base += "ROUND N°{tour}\n".format(tour=actual_round)
-        base += "Le tour à débuter le : ", str(starting_time)
-        base += "Quand tout les joueurs auront fini leurs parties entrez << oui >>"
+        base += "Le tour à débuter le : " + starting_time
+        base += "\nQuand tout les joueurs auront fini leurs parties entrez << oui >>"
         print(base)
 
     def round_end(name, actual_round, ending_time):
-        
+
+        ClearTerminal()
         base = " --TOURNOIS--\n"
         base += str(name.upper()) + "\n\n"
         base += "ROUND N°{tour}\n".format(tour=actual_round)
-        base += "Le tour à fini le : ", str(ending_time)
+        base += "Le tour à fini le : " + ending_time
         base += "Veuillez entrer les résultat du tour pour chaque joueurs"
         print(base)
 

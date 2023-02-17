@@ -188,7 +188,7 @@ class Controler:
             while not condition:
                 ClearTerminal()
                 result = function(*args, **kwargs)
-                condition = Controler.is_valid()
+                condition = Controler.is_valid(2)
 
             return result
 
@@ -226,7 +226,7 @@ class Controler:
             print(tabulate(data, headers='firstrow', tablefmt='fancy_grid'))
             player_id = int(input("Entrez l'Identifiant des joueurs à ajouter : "))
             # VERIFIER SI L'ENTREE EST UNE NOMBRE ET PAS UN STRING
-            response = Controler.is_valid()
+            response = Controler.is_valid(2)
 
             if response:
                 ClearTerminal()
@@ -235,7 +235,7 @@ class Controler:
                 print("Le joueur n°" + str(player_id) +
                       " a été ajouté à la liste")
                 print("Continuer d'ajouter des joueurs ?")
-                has_finished = not Controler.is_valid()
+                has_finished = not Controler.is_valid(1)
                 continue
             else:
                 continue
@@ -249,13 +249,16 @@ class Controler:
         text = title[x] + user_data[x]
         return text
 
-    def is_valid():
+    def is_valid(option=1):
         """Check if answer is Yes or No and return True or False"""
         yes_list = ["Oui", "oui", "Yes", "yes", "Ou",
                     "ou", "Ye", "ye", "O", "o", "Y", "y", "ok"]
         no_list = ["Non", "non", "No", "no", "Nn", "nn", "N", "n"]
         answer_list = yes_list + no_list
-        print("Souhaitez vous valider ?")
+        if option == 1:
+            pass
+        else:
+            print("Souhaitez vous valider ?")
 
         value = True
         response = ""

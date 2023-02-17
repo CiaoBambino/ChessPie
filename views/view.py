@@ -164,10 +164,7 @@ class RoundMenu:
         print("\n --TOURS-- \n")
         print("[1] AFFICHER LES TOURS")
         print("[2] AFFICHER LES MATCH")
-        print("[3] CHARGER UN TOUR")
-        print("[4] MODIFIER UN TOUR")
-        print("[5] SUPPRIMER UN TOUR")
-        print("[6] RETOUR")
+        print("[3] RETOUR")
         print("[q] quitter" + "      " +
               "[n] nettoyer" + "      " +
               "[s] sauvegarder")
@@ -186,15 +183,6 @@ class RoundMenu:
                     print("option2")
                     self.has_decided = True
                 case "3":
-                    print("option3")
-                    self.has_decided = True
-                case "4":
-                    print("option4")
-                    self.has_decided = True
-                case "5":
-                    print("option5")
-                    self.has_decided = True
-                case "6":
                     ClearTerminal()
                     TournamentMenu()
                     self.has_decided = True
@@ -211,10 +199,35 @@ class RoundMenu:
     def view(name, actual_round, match_list):  # [1] AFFICHER LES TOURS
         base = " --TOURNOIS--\n"
         base += str(name.upper()) + "\n\n"
-        base += "ROUND N°{tour}".format(tour=actual_round)
-        data = [["Nom", "Prénom", "ID Joueur"]]
-        print(tabulate(match_list, tablefmt='fancy_grid'))
+        base += "ROUND N°{tour}\n".format(tour=actual_round)
+        ClearTerminal()
+        print(base)
+        print("Listes des matchs : \n")
+        i = 1
+        for matches in match_list:
+            print(str(i), " : ", matches)
+            i += 1
         print("Commencer le Round ?")
+    
+    def round_start(name, actual_round, starting_time):
+        base = " --TOURNOIS--\n"
+        base += str(name.upper()) + "\n\n"
+        base += "ROUND N°{tour}\n".format(tour=actual_round)
+        base += "Le tour à débuter le : "str(starting_time)
+        base += "Quand tout les joueurs auront fini leurs parties entrez << oui >>"
+        print(base)
+
+    def round_end(name, actual_round, ending_time):
+        
+        base = " --TOURNOIS--\n"
+        base += str(name.upper()) + "\n\n"
+        base += "ROUND N°{tour}\n".format(tour=actual_round)
+        base += "Le tour à fini le : "str(ending_time)
+        base += "Veuillez entrer les résultat du tour pour chaque joueurs"
+        print(base)
+
+        return result
+        
 
 
 class MatchMenu:

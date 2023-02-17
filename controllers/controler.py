@@ -347,8 +347,14 @@ class CreateRounds:
 
         p1_score = 0
         p2_score = 0
+        color = bool(random.getrandbits(1))
+        if color:
+            color = "blanc"
+        else:
+            color = "noir"
 
-        matche = match.Match(player_one, p1_score, player_two, p2_score)
+        matche = match.Match(player_one, p1_score, player_two, p2_score, color)
+
         return matche
 
 
@@ -377,18 +383,33 @@ class CreateTournament:
         check = Controler.is_valid()
 
         if check:
+
             i = Controler.get_actual_round(tournois)
             j = i - 1
+
             for rounds in tournois.rounds_list[j:]:
 
-                starting_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 liste = tournois.registered_players
                 match_list, impair_p = CreateRounds.round_generator(liste, i)
-                new_round = rounde.Round(i, match_list, starting_time)
+                new_round = rounde.Round(i, match_list)
                 rounds.append(new_round)
                 view.RoundMenu.view(tournois.name, str(i), match_list)
                 check2 = Controler.is_valid()
-                # afficher la vue et demander lancer ou pas
+
+                if check2:
+                    starting_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+                    view.RoundMenu.round_start(tournois.name, str(i), starting_time)
+                    check3 = Controler.is_valid()
+                    if check3:
+                        ending_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+                        result = view.RoundMenu.round_end(tournois.name, str(i), ending_time)
+                        i += 1
+                    else:
+                        view.TournamentMenu()
+                else:
+                    view.TournamentMenu()
         else:
             view.TournamentMenu()
 

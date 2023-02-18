@@ -43,7 +43,7 @@ class Player:
 
         return player_data
 
-    def deserializer(self, player_data):
+    def unserializer(self, player_data):
         """Deserialize the Object Player from a dictionnary"""
 
         name = player_data['name']

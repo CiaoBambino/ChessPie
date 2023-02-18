@@ -20,6 +20,10 @@ class Controler:
     def synchroniser():
         pass
 
+    def convert_list_to_dict(liste):
+        dictio = liste[0]
+        return dictio
+
     def set_starting_time(starting_time):
         # actual round
         pass
@@ -27,8 +31,24 @@ class Controler:
     def set_ending_time(ending_time):
         pass
 
-    def set_tournament_score(match_list):
+    def set_tournament_score(match_list, tournois):
         """Set the score into tournament.json"""
+
+        tournoi = Controler.json_deserializer(tournois)
+
+        for i in range(len(match_list)):
+            player1_id = match_list[i][0][0]['player_id']
+            index = Controler.get_selected_player_index(player1_id, tournoi)
+            tournoi[1]['registered_players'][index]['tournament_score'] += match_list[i][0][0]['tournament_score']
+
+            player2_id = match_list[i][1][0]['player_id']
+            index = Controler.get_selected_player_index(player2_id, tournoi)
+            tournoi[1]['registered_players'][index]['tournament_score'] += match_list[i][1][0]['tournament_score']
+        tournoi = Controler.remove_first_index(tournoi)
+        tournoi = Controler.convert_list_to_dict(tournoi)
+        print(tournoi)
+        time.sleep(7)
+        Controler.tournament_updater(tournoi)
 
     def set_score(match_list):
         """Set the scores into Player.json"""
@@ -52,8 +72,6 @@ class Controler:
                 match_list[i][1][1] += 1
                 match_list[i][1][0]['tournament_score'] = match_list[i][1][1]
 
-        print(match_list)
-        time.sleep(10)
         return match_list
 
     def check_match_input(result):
@@ -189,7 +207,32 @@ class Controler:
             with open(path, 'a') as f:
                 json.dump(objet, f)
 
-    def json_serialiser(Object):
+    def tournament_updater(Object):
+        """serializer function only for tournament"""
+
+        print("tournament updater")
+        print(Object)
+        time.sleep(7)
+        # create a list to stock the upcoming file
+        new_file = []
+        # get a dictionnary
+        path = Controler.get_path(Object)
+        Controler.check_path(path)
+        Controler.copy_file(Object)
+
+        with open(path, 'r') as rf:
+            file = json.load(rf)
+
+        for elements in file:
+            new_file.append(elements)
+
+        new_file.append(Object)
+
+        # Serialise the final file with the new Object inside
+        with open(path, 'w') as f:
+            json.dump(new_file, f)
+
+    def json_serializer(Object):
         """serialize an object at the end of a json file"""
 
         # create a list to stock the upcoming file
@@ -212,22 +255,18 @@ class Controler:
         with open(path, 'w') as f:
             json.dump(new_file, f)
 
-    def json_deserialiser(Object):
+    def json_deserializer(Object):
 
         file = []
         # find the object file.json with his class name
         path = Controler.get_path(Object)
-        print(path)
-        time.sleep(5)
 
         with open(path, 'r') as rf:
             file = json.load(rf)
 
-        for objet in file:
-            file.append(Object.deserializer(objet))
 
-        print(file)
-        time.sleep(10)
+        """for objet in file:
+            file.append(Object.unserializer(objet))"""
         return file
 
     def cleaner(function):
@@ -422,9 +461,8 @@ class CreateTournament:
                                                tournament_player_list,
                                                number_of_rounds,
                                                rounds_list)
-        Controler.json_serialiser(new_tournament)
+        Controler.json_serializer(new_tournament)
         CreateTournament.run(new_tournament)
-
 
     def run(tournois):
 
@@ -457,7 +495,7 @@ class CreateTournament:
                         result_list = view.RoundMenu.round_end(tournois.name, str(i), ending_time, match_list)
 
                         match_list = Controler.set_matchlist_score(match_list, result_list)
-                        
+                        Controler.set_tournament_score(match_list, tournois)
                         i += 1
                     else:
                         view.TournamentMenu()
@@ -514,7 +552,7 @@ class CreatePlayer:
         # unpack data and create a new player object
         name, first_name, birthday, note = [*data]
         new_player = player.Player(name, first_name, birthday, note)
-        Controler.json_serialiser(new_player)
+        Controler.json_serializer(new_player)
 
 
 class ClearTerminal:

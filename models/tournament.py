@@ -46,7 +46,7 @@ class Tournament:
 
         return tournament_data
 
-    def deserializer(self, tournament_data):
+    def unserializer(self, tournament_data):
         """Deserialise the Object Tournament for the JSON file"""
 
         name = tournament_data['name']

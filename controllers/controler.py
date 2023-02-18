@@ -20,6 +20,39 @@ class Controler:
     def synchroniser():
         pass
 
+    def set_starting_time(starting_time):
+        # actual round
+        pass
+
+    def set_ending_time(ending_time):
+        pass
+
+    def set_tournament_score(match_list):
+        """Set the score into the JSON"""
+
+    def set_score(match_list):
+        """Set the scores into Player.json"""
+
+    def set_matchlist_score(match_list, result_list):
+        """Set score into the match list from the result list:
+           1 :player one won, 2 :null, 3 :player two won """
+
+        for i in range(len(match_list)):
+            if result_list[i] == '1':
+                match_list[i][0][1] += 1
+            elif result_list[i] == '2':
+                match_list[i][0][1] += 0.5
+                match_list[i][1][1] += 0.5
+            else:
+                match_list[i][1][1] += 1
+
+    def check_match_input(result):
+
+        if result == '1' or result == '2' or result == '3':
+            return True
+        else:
+            return False
+
     def remove_first_index(tournament_player_list):
         """Get a list as entry, 
            return it without the first element"""
@@ -62,8 +95,6 @@ class Controler:
         if check:  # peut etre modifier par try except plus tard
             with open(path, 'r') as rf:
                 the_tournament = json.load(rf)
-                print(the_tournament)
-                print("get actual round ___________")
 
             for item in the_tournament[1:]:
                 actual_round = item["actual_round"]
@@ -195,8 +226,6 @@ class Controler:
         wrapper.__doc__ = function.__doc__
         return wrapper
 
-    # COORDINATE_INPUT AND SELECT PLAYER ARE GETTING THE INPUT FROM USER
-
     @cleaner
     def coordinate_input(user_data, title, base):
 
@@ -303,7 +332,7 @@ class CreateRounds:
             return match_liste, player_impair
 
         else:
-            Controler.sort_by_score(player_list)
+            player_list = Controler.sort_by_score(liste)
             match_liste, player_impair = CreateRounds.create_match_list(player_list)
             return match_liste, player_impair
 
@@ -376,8 +405,8 @@ class CreateTournament:
                                                number_of_rounds,
                                                rounds_list)
         Controler.json_serialiser(new_tournament)
-
         CreateTournament.run(new_tournament)
+        
 
     def run(tournois):
 
@@ -407,12 +436,17 @@ class CreateTournament:
                     if check3:
                         ending_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-                        result = view.RoundMenu.round_end(tournois.name, str(i), ending_time)
+                        result = view.RoundMenu.round_end(tournois.name, str(i), ending_time, match_list)
+                        match_list = Controler.set_matchlist_score(match_list, result)
+
                         i += 1
                     else:
                         view.TournamentMenu()
                 else:
                     view.TournamentMenu()
+
+            view.TournamentView.end(tournois.name)
+            view.TournamentMenu()
         else:
             view.TournamentMenu()
 

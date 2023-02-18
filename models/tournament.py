@@ -40,9 +40,9 @@ class Tournament:
         tournament_data['description'] = self.description
         tournament_data['tournament_id'] = self.tournament_id
         tournament_data['registered_players'] = self.registered_players
-        tournament_data['actual_round'] = self.actual_round
-        tournament_data['rounds_list'] = self.rounds_list
         tournament_data['number_of_rounds'] = self.number_of_rounds
+        tournament_data['rounds_list'] = self.rounds_list
+        tournament_data['actual_round'] = self.actual_round
 
         return tournament_data
 
@@ -56,9 +56,9 @@ class Tournament:
         description = tournament_data['description']
         tournament_id = tournament_data['tournament_id']
         registered_players = tournament_data['registered_players']
-        actual_round = tournament_data['actual_round']
-        rounds_list = tournament_data['rounds_list']
         number_of_rounds = tournament_data['number_of_rounds']
+        rounds_list = tournament_data['rounds_list']
+        actual_round = tournament_data['actual_round']
 
         return Tournament(name,
                           place,

@@ -36,27 +36,25 @@ class Controler:
 
     def set_matchlist_score(match_list, result_list):
 
-        new_match_list = match_list
-        print(result_list)
-        print(new_match_list[0][0][1])
-        print("new match list")
-        print(match_list[0][0])
-        print("matchlist")
-        time.sleep(20)
         for i in range(len(match_list)):
-            print("entrer dans la boucle")
+
             if result_list[i] == '1':
-                new_match_list[i][0][1] += 1
+                # set the variable score of the Match object
+                match_list[i][0][1] += 1 
+                # set the variable score of the Player object
+                match_list[i][0][0]['tournament_score'] = match_list[i][0][1]
             elif result_list[i] == '2':
-                new_match_list[i][0][1] += 0.5
-                new_match_list[i][1][1] += 0.5
+                match_list[i][0][1] += 0.5
+                match_list[i][0][0]['tournament_score'] = match_list[i][0][1]
+                match_list[i][1][1] += 0.5
+                match_list[i][1][0]['tournament_score'] = match_list[i][1][1]
             else:
-                new_match_list[i][1][1] += 1
-        print("avant le return")
-        print(new_match_list)
-        print("newmatchlist")
-        time.sleep(5)
-        return new_match_list
+                match_list[i][1][1] += 1
+                match_list[i][1][0]['tournament_score'] = match_list[i][1][1]
+
+        print(match_list)
+        time.sleep(10)
+        return match_list
 
     def check_match_input(result):
 
@@ -66,7 +64,7 @@ class Controler:
             return False
 
     def remove_first_index(tournament_player_list):
-        """Get a list as entry, 
+        """Get a list as entry,
            return it without the first element"""
         del tournament_player_list[0]
         new_list = tournament_player_list
@@ -120,6 +118,15 @@ class Controler:
             id_list.append(p["player_id"])
 
         return id_list
+
+    def get_selected_player_index(player_id, tournois):
+        """From a given player id return
+        the player index of the dictionnary"""
+
+        for i in range(len(tournois[1]['registered_players'])):
+            if tournois[1]['registered_players'][i]["player_id"] == player_id:
+                selected_player_index = i
+                return selected_player_index
 
     def get_selected_player(player_id):
         """From a given player id return the player
@@ -263,7 +270,6 @@ class Controler:
 
             ClearTerminal()
             print(base)
-            time.sleep(0)
             print(tabulate(data, headers='firstrow', tablefmt='fancy_grid'))
             player_id = int(input("Entrez l'Identifiant des joueurs à ajouter : "))
             # VERIFIER SI L'ENTREE EST UNE NOMBRE ET PAS UN STRING
@@ -449,13 +455,9 @@ class CreateTournament:
                         ending_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
                         result_list = view.RoundMenu.round_end(tournois.name, str(i), ending_time, match_list)
-                        print(match_list)
-                        time.sleep(2.5)
+
                         match_list = Controler.set_matchlist_score(match_list, result_list)
-                        new_match_list = Controler.set_matchlist_score(match_list, result_list)
-                        print(match_list)
-                        print(new_match_list)
-                        time.sleep(2.5)
+                        
                         i += 1
                     else:
                         view.TournamentMenu()

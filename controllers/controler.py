@@ -28,23 +28,35 @@ class Controler:
         pass
 
     def set_tournament_score(match_list):
-        """Set the score into the JSON"""
+        """Set the score into tournament.json"""
 
     def set_score(match_list):
         """Set the scores into Player.json"""
+        pass
 
     def set_matchlist_score(match_list, result_list):
-        """Set score into the match list from the result list:
-           1 :player one won, 2 :null, 3 :player two won """
 
+        new_match_list = match_list
+        print(result_list)
+        print(new_match_list[0][0][1])
+        print("new match list")
+        print(match_list[0][0])
+        print("matchlist")
+        time.sleep(20)
         for i in range(len(match_list)):
+            print("entrer dans la boucle")
             if result_list[i] == '1':
-                match_list[i][0][1] += 1
+                new_match_list[i][0][1] += 1
             elif result_list[i] == '2':
-                match_list[i][0][1] += 0.5
-                match_list[i][1][1] += 0.5
+                new_match_list[i][0][1] += 0.5
+                new_match_list[i][1][1] += 0.5
             else:
-                match_list[i][1][1] += 1
+                new_match_list[i][1][1] += 1
+        print("avant le return")
+        print(new_match_list)
+        print("newmatchlist")
+        time.sleep(5)
+        return new_match_list
 
     def check_match_input(result):
 
@@ -406,7 +418,7 @@ class CreateTournament:
                                                rounds_list)
         Controler.json_serialiser(new_tournament)
         CreateTournament.run(new_tournament)
-        
+
 
     def run(tournois):
 
@@ -436,9 +448,14 @@ class CreateTournament:
                     if check3:
                         ending_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-                        result = view.RoundMenu.round_end(tournois.name, str(i), ending_time, match_list)
-                        match_list = Controler.set_matchlist_score(match_list, result)
-
+                        result_list = view.RoundMenu.round_end(tournois.name, str(i), ending_time, match_list)
+                        print(match_list)
+                        time.sleep(2.5)
+                        match_list = Controler.set_matchlist_score(match_list, result_list)
+                        new_match_list = Controler.set_matchlist_score(match_list, result_list)
+                        print(match_list)
+                        print(new_match_list)
+                        time.sleep(2.5)
                         i += 1
                     else:
                         view.TournamentMenu()

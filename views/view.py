@@ -96,11 +96,20 @@ class TournamentMenu:
 class TournamentView:
 
     def view(name, number_of_player):
-        base = " --TOURNOIS--\n"
-        base += str(name.upper()) + "\n"
+        base = "--TOURNOIS--\n\n"
+        base += str(name.upper()) + "\n\n"
         base += str(number_of_player) + " participants\n"
         base += "Lancer le tournoi ..."
+        ClearTerminal()
         print(base)
+
+    def end(name):
+        base = "--TOURNOIS--\n\n"
+        base += str(name.upper()) + "\n\n"
+        base += "Fin du Tournoi"
+        ClearTerminal()
+        print(base)
+        sleep(1.8)
 
 
 class CreateTournamentView:
@@ -184,7 +193,7 @@ class RoundMenu:
                     print("Cette option n'existe pas")
 
     def view(name, actual_round, match_list):  # [1] AFFICHER LES TOURS
-        base = " --TOURNOIS--\n"
+        base = "--TOURNOIS--\n\n"
         base += str(name.upper()) + "\n\n"
         base += "ROUND N°{tour}\n".format(tour=actual_round)
         ClearTerminal()
@@ -194,29 +203,53 @@ class RoundMenu:
         for matches in match_list:
             print(str(i), " : ", matches)
             i += 1
-        print("Commencer le Round ?")
+        print("\nCommencer le Round ?")
 
     def round_start(name, actual_round, starting_time):
 
         ClearTerminal()
-        base = " --TOURNOIS--\n"
+        base = "--TOURNOIS--\n\n"
         base += str(name.upper()) + "\n\n"
-        base += "ROUND N°{tour}\n".format(tour=actual_round)
+        base += "ROUND N°{tour}\n\n".format(tour=actual_round)
         base += "Le tour à débuter le : " + starting_time
         base += "\nQuand tout les joueurs auront fini leurs parties entrez << oui >>"
         print(base)
 
-    def round_end(name, actual_round, ending_time):
+    def round_end(name, actual_round, ending_time, match_list):
 
         ClearTerminal()
-        base = " --TOURNOIS--\n"
+        base = "--TOURNOIS--\n\n"
         base += str(name.upper()) + "\n\n"
-        base += "ROUND N°{tour}\n".format(tour=actual_round)
+        base += "ROUND N°{tour}\n\n".format(tour=actual_round)
         base += "Le tour à fini le : " + ending_time
-        base += "Veuillez entrer les résultat du tour pour chaque joueurs"
+        base += "\nPour chaque matches veuillez entrer le numéro du joueur gagnant :\n"
+        base += "[1] pour le joueur de gauche, [2] égalité, [3] pour le joueur de droite.\n"
         print(base)
 
-        return result
+        result_list = []
+        i = 1
+        for matches in match_list:
+            print(str(i), " : ", matches)
+            result = input("Résultat : ")
+            checked = controler.Controler.check_match_input(result)
+            counter = 1
+
+            while not checked:
+
+                if counter == 1:
+                    print("Entrez 1, 2 ou 3 en fonction du résultat")
+                    result = input("Résultat : ")
+                    checked = controler.Controler.check_match_input(result)
+                    counter += 1
+                else:
+                    print("Entrez 1, 2 ou 3 en fonction du résultat,\n1 si le joueur de gauche a gagné, 2 pour un match nul, 3 si le joueur de droite a gagné")
+                    result = input("Résultat : ")
+                    checked = controler.Controler.check_match_input(result)
+
+            result_list += result
+            i += 1
+
+        return result_list
 
 
 class PlayerMenu:

@@ -1,158 +1,110 @@
-import json
-import time
-import datetime
+import re
 import os
-from os import system, name
+import json
+import random
+import shutil
+import datetime
 from views import view
 from models import player, tournament, rounde, match
-import shutil
-import re
-from tabulate import tabulate
-import random
+import time
 
 
 class Controler:
 
     def __init__(self, view):
-
         self.view = view
 
-    def synchroniser():
-        pass
+    def json_serializer(Object, option1=None, option2=None):
+        """serialize an object at the end of a json file
+        parameter 'option2' is for check_path function
+        'option1' is for get_path function"""
+        new_file = []
+        objet = Object.serializer()
+        path = Controler.get_path(Object, option1)
+        Controler.check_path(path, option2)
+        Controler.copy_file(path)
 
-    def convert_list_to_dict(liste):
-        dictio = liste[0]
-        return dictio
+        with open(path, 'r') as rf:
+            file = json.load(rf)
+        # add the opened file to the list "new_file"
+        for elements in file:
+            new_file.append(elements)
+        # add the object to serialize at the end
+        new_file.append(objet)
+        # write new file into the file
+        with open(path, 'w') as f:
+            json.dump(new_file, f)
 
-    def set_starting_time(starting_time):
-        # actual round
-        pass
+    def json_writer(path, liste):
+        """write a given list"""
+        with open(path, 'w') as f:
+            json.dump(liste, f)
 
-    def set_ending_time(ending_time):
-        pass
+    def json_reader(path):
+        """open to read a json"""
+        file = []
+        with open(path, 'r') as rf:
+            file = json.load(rf)
+        return file
 
-    def set_tournament_score(match_list, tournois):
-        """Set the score into tournament.json"""
-
-        tournoi = Controler.json_deserializer(tournois)
-
-        for i in range(len(match_list)):
-            player1_id = match_list[i][0][0]['player_id']
-            index = Controler.get_selected_player_index(player1_id, tournoi)
-            tournoi[1]['registered_players'][index]['tournament_score'] += match_list[i][0][0]['tournament_score']
-
-            player2_id = match_list[i][1][0]['player_id']
-            index = Controler.get_selected_player_index(player2_id, tournoi)
-            tournoi[1]['registered_players'][index]['tournament_score'] += match_list[i][1][0]['tournament_score']
-        tournoi = Controler.remove_first_index(tournoi)
-        tournoi = Controler.convert_list_to_dict(tournoi)
-        print(tournoi)
-        time.sleep(7)
-        Controler.tournament_updater(tournoi)
-
-    def set_score(match_list):
-        """Set the scores into Player.json"""
-        pass
-
-    def set_matchlist_score(match_list, result_list):
-
-        for i in range(len(match_list)):
-
-            if result_list[i] == '1':
-                # set the variable score of the Match object
-                match_list[i][0][1] += 1 
-                # set the variable score of the Player object
-                match_list[i][0][0]['tournament_score'] = match_list[i][0][1]
-            elif result_list[i] == '2':
-                match_list[i][0][1] += 0.5
-                match_list[i][0][0]['tournament_score'] = match_list[i][0][1]
-                match_list[i][1][1] += 0.5
-                match_list[i][1][0]['tournament_score'] = match_list[i][1][1]
-            else:
-                match_list[i][1][1] += 1
-                match_list[i][1][0]['tournament_score'] = match_list[i][1][1]
-
-        return match_list
-
-    def check_match_input(result):
-
-        if result == '1' or result == '2' or result == '3':
-            return True
+    def remove_index(liste, index=None):
+        """Get a list as entry, return it without the element.
+        If no index is given it remove the first element"""
+        if index is not None:
+            del liste[index]
+            new_list = liste
+            return new_list
         else:
-            return False
+            del liste[0]
+            new_list = liste
+            return new_list
 
-    def remove_first_index(tournament_player_list):
-        """Get a list as entry,
-           return it without the first element"""
-        del tournament_player_list[0]
-        new_list = tournament_player_list
-        return new_list
+    def set_player_total_score():
+        pass
 
-    def sort_by_score(tournament_player_list):
-        """Return a list sorted by higher score"""
-        liste = tournament_player_list
+    def set_tournament_score(match_list, tournament):
+        """Set the score into the tournament.json"""
+        path = Controler.get_path(tournament, 1)
+        file = Controler.json_reader(path)
 
-        def get_tscore(element):
-            return element['tournament_score']
+        for players in match_list:
 
-        liste.sort(key=get_tscore, reverse=True)
-        return liste
+            player_id = players[0]['player_id']
+            index = Controler.get_selected_player_index(player_id, file)
+            file[1]['registered_players'][index]['tournament_score'] += players[1]
 
-    def shuffle_list(liste):
+        Controler.json_writer(path, file)
 
-        shuffled = random.sample(liste, len(liste))
-        return shuffled
+    def set_matchlist_score(matche, result):
+        """set the score inside the tuple of a match"""
 
-    def get_score(player):
-        score = None
-        for item in player:
-            score = item["player_id"]
+        if result == '1':
+            # set the variable score of the Match object
+            matche[0][1] += 1
+            # set the variable score of the Player object
+            matche[0][0]['tournament_score'] = matche[0][1]
+        elif result == '2':
+            matche[0][1] += 0.5
+            matche[0][0]['tournament_score'] = matche[0][1]
+            matche[1][1] += 0.5
+            matche[1][0]['tournament_score'] = matche[1][1]
+        else:
+            matche[1][1] += 1
+            matche[1][0]['tournament_score'] = matche[1][1]
 
-        return score
+        return matche
 
-    def get_actual_round(tournoi):
-        """get the round of a tournament !"""
-
-        actual_round = None
-        the_tournament = []
-        name = "Tournament.json"
-        directory = "\data"
-        directory_name = os.path.join(directory, name)
-        path = os.getcwd() + directory_name
-        check = os.path.isfile(path)
-        if check:  # peut etre modifier par try except plus tard
-            with open(path, 'r') as rf:
-                the_tournament = json.load(rf)
-
-            for item in the_tournament[1:]:
-                actual_round = item["actual_round"]
-
-        return actual_round
-
-    def get_ids(player_list):
-
-        id_list = []
-        for p in player_list:
-            id_list.append(p["player_id"])
-
-        return id_list
-
-    def get_selected_player_index(player_id, tournois):
-        """From a given player id return
-        the player index of the dictionnary"""
-
-        for i in range(len(tournois[1]['registered_players'])):
-            if tournois[1]['registered_players'][i]["player_id"] == player_id:
+    def get_selected_player_index(player_id, file):
+        """From a given player id return the player index of the dictionnary"""
+        for i in range(len(file[1]['registered_players'])):
+            if file[1]['registered_players'][i]["player_id"] == player_id:
                 selected_player_index = i
                 return selected_player_index
 
-    def get_selected_player(player_id):
+    def get_selected_player(player_id, player_list):
         """From a given player id return the player
            as a dictionnary"""
-
-        # list of all players in Player.json
-        liste = Controler.get_player_list()
-        for p in liste[1:]:
+        for p in player_list:
             if [p["player_id"]] == [player_id]:
                 selected_player = p
                 return selected_player
@@ -175,172 +127,147 @@ class Controler:
 
         return player_list
 
-    def copy_file(Object):
-        """Copy the file in the same directory
-        adding Save at the end of the name"""
+    def get_and_update_player_id():
+        """return the an ID for a new user to be created,
+        increment the ID counter inside the Player.json"""
+        path = ".\data\Player.json"
+        Controler.check_path(path, 1)
+        player_list = Controler.get_player_list()
+        ID = Controler.get_player_id_from_json(player_list)
+        player_list[0]["player_id"] += 1
+        Controler.json_writer(path, player_list)
+        return ID
 
-        path = Controler.get_path(Object)
+    def get_player_id_from_json(liste):
+        """from the list of Player.json
+        return the player_id of the first dictionnary"""
+        for p in liste[:1]:
+            return p["player_id"]
+
+    def get_object_name(Object):
+        """Return the name of the class of an object"""
+        return Object.__class__.__name__
+
+    def get_path(Object, option=None):
+        """find the absolute path with the name of the object.
+        Option specify that the path must be in a folder named
+        with the Object name, and set the file name with the
+        object attributes"""
+        if option is None:
+            # no option
+            name = Controler.get_object_name(Object) + ".json"
+            directory = "\data"
+            directory_name = os.path.join(directory, name)
+            path = os.getcwd() + directory_name
+            return path
+        else:
+            # if there is an option in parameter
+            name = Object.name + Object.starting_date + ".json"
+            parent_directory = "\data"
+            directory = Controler.get_object_name(Object)
+            directory_name = os.path.join(parent_directory, directory)
+            path = os.getcwd() + directory_name
+
+            if not os.path.exists(path):
+                os.mkdir(path)
+                full_path = os.path.join(path, name)
+                return full_path
+            else:
+                full_path = os.path.join(path, name)
+                return full_path
+
+    def get_actual_round(tournament):
+        """get the current round of a tournament"""
+
+        actual_round = None
+        name = tournament.name + tournament.starting_date + ".json"
+        directory = "\data\Tournament"
+        directory_name = os.path.join(directory, name)
+        path = os.getcwd() + directory_name
+        check = os.path.isfile(path)
+        if check:  # peut etre modifier par try except plus tard
+            with open(path, 'r') as rf:
+                file = json.load(rf)
+
+            for item in file[1:]:
+                actual_round = item["actual_round"]
+
+        return actual_round
+
+    def get_number_player(player_list):
+        """Return number of player, make sur to not have the first index
+        that isn't a player"""
+        counter = 0
+        for p in player_list:
+            counter += 1
+        return counter
+
+    def get_color():
+        """return a random color between black and white"""
+        color = bool(random.getrandbits(1))
+        if color:
+            color = "blanc"
+            return color
+        else:
+            color = "noir"
+            return color
+
+    def shuffle_list(liste):
+        """shuffle a list"""
+        shuffled = random.sample(liste, len(liste))
+        return shuffled
+
+    def copy_file(path):
+        """Copy the file in the same directory
+        adding "Save" at the end of the name of the file"""
         new_path = re.sub('.json', 'Save.json', path)
         shutil.copyfile(path, new_path)
 
-    def get_path(Object):
-        """find the absolute path with the name of the object called"""
-
-        name = Object.__class__.__name__ + ".json"
-        directory = "\data"
-        directory_name = os.path.join(directory, name)
-        path = os.getcwd() + directory_name
-
-        return path
-
-    def check_path(path):
+    def check_path(path, option=None):
         """Check if the path contain a file,
-        if not create a file with a List inside"""
-
+        if not create a file with a List inside
+        option : 1=Player, 2=Tournament"""
         check = os.path.isfile(path)
         if check:
             return
         else:
-            objet = [{"Objet": "premier",
-                     "ne pas ": "supprimer", "don't": "delete"}]
+            if option == 1:
+                objet = [{"total_player": 0, "player_id": 1}]
+                with open(path, 'a') as f:
+                    json.dump(objet, f)
+            elif option == 2:
+                objet = [{"total_tournament": 0}]
+                with open(path, 'a') as f:
+                    json.dump(objet, f)
+            else:
+                objet = [{"unknow": 0, "unknow": 0}]
+                with open(path, 'a') as f:
+                    json.dump(objet, f)
 
-            with open(path, 'a') as f:
-                json.dump(objet, f)
+    def is_integer_in_range(value, range):
+        """check if the value is an integer and in the given range"""
+        if isinstance(value, int) and value <= range:
+            return True
+        else:
+            return False
 
-    def tournament_updater(Object):
-        """serializer function only for tournament"""
-
-        print("tournament updater")
-        print(Object)
-        time.sleep(7)
-        # create a list to stock the upcoming file
-        new_file = []
-        # get a dictionnary
-        path = Controler.get_path(Object)
-        Controler.check_path(path)
-        Controler.copy_file(Object)
-
-        with open(path, 'r') as rf:
-            file = json.load(rf)
-
-        for elements in file:
-            new_file.append(elements)
-
-        new_file.append(Object)
-
-        # Serialise the final file with the new Object inside
-        with open(path, 'w') as f:
-            json.dump(new_file, f)
-
-    def json_serializer(Object):
-        """serialize an object at the end of a json file"""
-
-        # create a list to stock the upcoming file
-        new_file = []
-        # get a dictionnary
-        objet = Object.serializer()
-        path = Controler.get_path(Object)
-        Controler.check_path(path)
-        Controler.copy_file(Object)
-
-        with open(path, 'r') as rf:
-            file = json.load(rf)
-
-        for elements in file:
-            new_file.append(elements)
-
-        new_file.append(objet)
-
-        # Serialise the final file with the new Object inside
-        with open(path, 'w') as f:
-            json.dump(new_file, f)
-
-    def json_deserializer(Object):
-
-        file = []
-        # find the object file.json with his class name
-        path = Controler.get_path(Object)
-
-        with open(path, 'r') as rf:
-            file = json.load(rf)
-
-
-        """for objet in file:
-            file.append(Object.unserializer(objet))"""
-        return file
-
-    def cleaner(function):
-        """Clean terminal and verify if user validate his entries"""
-        def wrapper(*args, **kwargs):
-
-            condition = False
-            while not condition:
-                ClearTerminal()
-                result = function(*args, **kwargs)
-                condition = Controler.is_valid(2)
-
-            return result
-
-        wrapper.__doc__ = function.__doc__
-        return wrapper
-
-    @cleaner
-    def coordinate_input(user_data, title, base):
-
-        print(base)
-
-        for x in range(len(user_data)):
-
-            user_data[x] = input(title[x])
-            line = Controler.proper_line(x, user_data, title)
-            base += "\n"
-            base += line
-            ClearTerminal()
-            print(base)
-
-        return user_data
-
-    def coordinate_input_select_player(base, data):
-
-        selected_players = []
-        has_finished = False
-
-        while not has_finished:
-
-            ClearTerminal()
-            print(base)
-            print(tabulate(data, headers='firstrow', tablefmt='fancy_grid'))
-            player_id = int(input("Entrez l'Identifiant des joueurs à ajouter : "))
-            # VERIFIER SI L'ENTREE EST UNE NOMBRE ET PAS UN STRING
-            response = Controler.is_valid(2)
-
-            if response:
-                ClearTerminal()
-                selected_player = Controler.get_selected_player(player_id)
-                selected_players.append(selected_player)
-                print("Le joueur n°" + str(player_id) +
-                      " a été ajouté à la liste")
-                print("Continuer d'ajouter des joueurs ?")
-                has_finished = not Controler.is_valid(1)
-                continue
+    def is_id_inlist(value, liste):
+        """check is the id is in the list, return true or false"""
+        for p in liste:
+            if value == p['player_id']:
+                return True
             else:
                 continue
-
-        return selected_players
-
-    def proper_line(x, user_data, title):
-        """get 2 strings, return 1 string
-        by additionning them second value first"""
-
-        text = title[x] + user_data[x]
-        return text
+        return False
 
     def is_valid(option=1):
-        """Check if answer is Yes or No and return True or False"""
+        """Check if answer is Yes or No and return True or False
+        options : 1(default) for no message, others = message"""
         yes_list = ["Oui", "oui", "Yes", "yes", "Ou",
                     "ou", "Ye", "ye", "O", "o", "Y", "y", "ok"]
         no_list = ["Non", "non", "No", "no", "Nn", "nn", "N", "n"]
         answer_list = yes_list + no_list
+
         if option == 1:
             pass
         else:
@@ -360,99 +287,86 @@ class Controler:
             if response == yes:
                 value = True
                 break
-
             else:
                 value = False
-
         return value
 
-
-class CreateRounds:
-
-    def rounds_list_generator(number_of_rounds):
-        """Return an empty list
-           sized for the number of rounds"""
-        rounds_list = []
-
-        for i in range(number_of_rounds):
-            rounds_list.append([])
-
-        return rounds_list
-
-    def round_generator(liste, actual_round):
-        """generate the round"""
-        # A CONTINUER
-
-        if actual_round == 1:
-            player_list = Controler.shuffle_list(liste)
-            match_liste, player_impair = CreateRounds.create_match_list(player_list)
-            return match_liste, player_impair
-
+    def is_pair(liste):
+        """return a bool if it's pair or not"""
+        if len(liste) % 2 == 0:
+            return True
         else:
-            player_list = Controler.sort_by_score(liste)
-            match_liste, player_impair = CreateRounds.create_match_list(player_list)
-            return match_liste, player_impair
+            return False
 
-    def create_match_list(player_list):
-        """Return a list of match and the impaire player
-           that is =None by default"""
+    def sort_by_score(tournament_player_list):
+        """Return a list sorted by higher score"""
+        def get_tscore(element):
+            """return tournament_score element"""
+            return element['tournament_score']
 
-        nb, is_pair = CreateTournament.calculate_player(player_list)
-        match_list = []
-        pair1 = []
-        pair2 = []
-        impaire_p = None
+        tournament_player_list.sort(key=get_tscore, reverse=True)
+        return tournament_player_list
 
-        if is_pair:
-            for i in range(0, nb, 2):
-                pair1.append(player_list[i])
+    def concatenate_data(x, user_data, title):
+        """get 2 strings, return 1 string
+        by concatenating them, second value first"""
+        text = title[x] + user_data[x]
+        return text
 
-            for j in range(1, nb, 2):
-                pair2.append(player_list[j])
-
-            for p1, p2 in zip(pair1, pair2):
-                matche = CreateRounds.create_match(p1, p2)
-                match_list.append(matche)
-
-            return match_list, impaire_p
-
+    def check_match_input(result):
+        """check if the input is 1, 2 or 3"""
+        if result == '1' or result == '2' or result == '3':
+            return True
         else:
-            for i in range(0, nb, 2):
-                pair1.append(player_list[i])
+            return False
 
-            impaire_p = pair1[-1]
-            del pair1[-1]
+    def check_if_valid(function):
+        """Verify if the user validate his entries"""
+        def wrapper(*args, **kwargs):
 
-            for j in range(1, nb, 2):
-                pair2.append(player_list[j])
+            condition = False
+            while not condition:
+                result = function(*args, **kwargs)
+                condition = Controler.is_valid(2)
 
-            for p1, p2 in zip(pair1, pair2):
-                paire = CreateRounds.create_match(p1, p2)
-                match_list.append(paire)
+            return result
 
-            return match_list, impaire_p
+        wrapper.__doc__ = function.__doc__
+        return wrapper
 
-    def create_match(player_one, player_two):
+    def clean_terminal(function):
+        """Clean terminal"""
+        def wrapper(*args, **kwargs):
+            ClearTerminal()
+            result = function(*args, **kwargs)
+            return result
 
-        p1_score = 0
-        p2_score = 0
-        color = bool(random.getrandbits(1))
-        if color:
-            color = "blanc"
-        else:
-            color = "noir"
+        wrapper.__doc__ = function.__doc__
+        return wrapper
 
-        matche = match.Match(player_one, p1_score, player_two, p2_score, color)
+    @clean_terminal
+    @check_if_valid
+    def get_input(user_data, title, base):
+        """get the input of the user
+        and return them as user_data"""
+        print(base)
 
-        return matche
+        for x in range(len(user_data)):
+
+            user_data[x] = input(title[x])
+            line = Controler.concatenate_data(x, user_data, title)
+            base += "\n"
+            base += line
+            ClearTerminal()
+            print(base)
+
+        return user_data
 
 
-class CreateTournament:
+class TournamentControler:
 
     def __init__(self):
-
-        # Initialise the tournament
-        name, place, starting_date, ending_date, description, tournament_player_list, number_of_rounds, rounds_list = CreateTournament.init()
+        name, place, starting_date, ending_date, description, tournament_player_list, number_of_rounds, rounds_list = TournamentControler.get_values()
         new_tournament = tournament.Tournament(name,
                                                place,
                                                starting_date,
@@ -461,98 +375,153 @@ class CreateTournament:
                                                tournament_player_list,
                                                number_of_rounds,
                                                rounds_list)
-        Controler.json_serializer(new_tournament)
-        CreateTournament.run(new_tournament)
+        Controler.json_serializer(new_tournament, 1, 2)
+        TournamentControler.run(new_tournament)
 
-    def run(tournois):
+    def get_values():
+        """All the variable necessary to create
+           an object Tournament are collected here"""
 
-        number_player, is_pair = CreateTournament.calculate_player(tournois.registered_players)
-        view.TournamentView.view(tournois.name, number_player)
-        check = Controler.is_valid()
+        # initialise the attributes from the view
+        user_data, title, base = view.TournamentMenu.create_tournament()
+        # store the inputs into data
+        data = Controler.get_input(user_data, title, base)
+        # load the list of all player from /data/Player.json
+        all_players = Controler.get_player_list()
+        # select players for the tournament
+        tournament_player_list = view.TournamentMenu.select_players(all_players)
+        # unpack data and create a new tournament object
+        name, place, starting_date, ending_date, description, number_of_rounds = [*data]
+        number_of_rounds = int(number_of_rounds)
+        rounds_list = RoundControler.get_rounds_list(number_of_rounds)
+
+        return name, place, starting_date, ending_date, description, tournament_player_list, number_of_rounds, rounds_list
+
+    def run(tournament):
+
+        number_player = Controler.get_number_player(tournament.registered_players)
+        check = view.TournamentMenu.start_of_tournament(tournament.name, number_player)
 
         if check:
 
-            i = Controler.get_actual_round(tournois)
+            i = Controler.get_actual_round(tournament)
             j = i - 1
 
-            for rounds in tournois.rounds_list[j:]:
+            for rounds in tournament.rounds_list[j:]:
 
-                liste = tournois.registered_players
-                match_list, impair_p = CreateRounds.round_generator(liste, i)
+                player_list = tournament.registered_players
+                match_list, impair_player = RoundControler.get_match_list(player_list, i) # IMPAIR PLAYEER
                 new_round = rounde.Round(i, match_list)
                 rounds.append(new_round)
-                view.RoundMenu.view(tournois.name, str(i), match_list)
-                check2 = Controler.is_valid()
+                check2 = view.RoundMenu.round_screen(tournament.name, str(i), match_list)
 
                 if check2:
                     starting_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-                    view.RoundMenu.round_start(tournois.name, str(i), starting_time)
-                    check3 = Controler.is_valid()
+                    check3 = view.RoundMenu.round_start(tournament.name, str(i), starting_time)
+
                     if check3:
                         ending_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-                        result_list = view.RoundMenu.round_end(tournois.name, str(i), ending_time, match_list)
-
-                        match_list = Controler.set_matchlist_score(match_list, result_list)
-                        Controler.set_tournament_score(match_list, tournois)
+                        match_list = view.RoundMenu.round_end(tournament.name, str(i), ending_time, match_list)
+                        Controler.set_tournament_score(match_list, tournament)
                         i += 1
                     else:
                         view.TournamentMenu()
                 else:
                     view.TournamentMenu()
 
-            view.TournamentView.end(tournois.name)
+            view.TournamentMenu.end_of_tournament(tournament.name)
             view.TournamentMenu()
         else:
             view.TournamentMenu()
 
-    def init():
-        """All the variable necessary to create
-           an object Tournament are collected here"""
 
-        # initialise the attributes from the view
-        user_data, title, base = view.CreateTournamentView.view()
-        # store the inputs into data
-        data = Controler.coordinate_input(user_data, title, base)
-        # load the list of all player from /data/Player.json
-        all_players = Controler.get_player_list()
-        # select player to participate tournament
-        SPV_base, SPV_data = view.SelectPlayerView.view(all_players)
-        tournament_player_list = Controler.coordinate_input_select_player(SPV_base, SPV_data)
-        # unpack data and create a new tournament object
-        name, place, starting_date, ending_date, description, number_of_rounds = [*data]
-        number_of_rounds = int(number_of_rounds)
-        rounds_list = CreateRounds.rounds_list_generator(number_of_rounds)
+class RoundControler:
 
-        return name, place, starting_date, ending_date, description, tournament_player_list, number_of_rounds, rounds_list
+    def get_rounds_list(number_of_rounds):
+        """Return an empty list sized with the number of rounds"""
+        rounds_list = []
+        for i in range(number_of_rounds):
+            rounds_list.append([])
 
-    def calculate_player(player_list):
-        """Return number of player in list and if it's pair"""
+        return rounds_list
 
-        counter = 0
-        is_pair = None
-        for p in player_list:
-            counter += 1
-        if counter % 2 == 0:
-            is_pair = True
+    def get_match_list(player_list, actual_round):
+        """generate the the match list"""
+        # A CONTINUER
+
+        if actual_round == 1:
+            shuffled_list = Controler.shuffle_list(player_list)
+            match_liste, player_impair = RoundControler.set_match_list(shuffled_list)
+            return match_liste, player_impair
+
         else:
-            is_pair = False
+            sorted_list = Controler.sort_by_score(player_list)
+            match_liste, player_impair = RoundControler.set_match_list(sorted_list)
+            return match_liste, player_impair
 
-        return counter, is_pair
+    def set_match_list(player_list):
+        """Return a list of match and the impaire player
+           that is =None by default"""
+
+        number = Controler.get_number_player(player_list)
+        is_pair = Controler.is_pair(player_list)
+        match_list = []
+        left_player = []
+        right_player = []
+        last_player = None
+
+        if is_pair:
+            for i in range(0, number, 2):
+                left_player.append(player_list[i])
+
+            for j in range(1, number, 2):
+                right_player.append(player_list[j])
+
+            for p1, p2 in zip(left_player, right_player):
+                matche = RoundControler.set_match(p1, p2)
+                match_list.append(matche)
+
+            return match_list, last_player
+
+        else:
+            for i in range(0, number, 2):
+                left_player.append(player_list[i])
+
+            last_player = left_player[-1]
+            del left_player[-1]
+
+            for j in range(1, number, 2):
+                right_player.append(player_list[j])
+
+            for p1, p2 in zip(left_player, right_player):
+                matche = RoundControler.set_match(p1, p2)
+                match_list.append(matche)
+
+            return match_list, last_player
+
+    def set_match(player_one, player_two):
+        """create a new Object Match"""
+        score = 0
+        new_match = match.Match(player_one, score, player_two, score)
+        matche = new_match.matche
+        return matche
 
 
-class CreatePlayer:
+class PlayerControler:
 
     def __init__(self):
         # initialise the attributes from the view
-        user_data, title, base = view.CreatePlayerView.view()
+        user_data, title, base = view.PlayerMenu.create_player()
         # store the inputs into data
-        data = Controler.coordinate_input(user_data, title, base)
+        data = Controler.get_input(user_data, title, base)
         # unpack data and create a new player object
         name, first_name, birthday, note = [*data]
-        new_player = player.Player(name, first_name, birthday, note)
-        Controler.json_serializer(new_player)
+        player_id = Controler.get_and_update_player_id()
+        # create a new player
+        new_player = player.Player(name, first_name, birthday, note, player_id)
+        Controler.json_serializer(new_player, 1)
 
 
 class ClearTerminal:
@@ -569,8 +538,8 @@ class ClearTerminal:
         """
 
         # for windows
-        if name == 'nt':
-            _ = system('cls')
+        if os.name == 'nt':
+            _ = os.system('cls')
         # others
         else:
-            _ = system('clear')
+            _ = os.system('clear')

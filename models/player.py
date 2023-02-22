@@ -1,11 +1,4 @@
-import time
-
-
 class Player:
-
-    TOTAL_PLAYER_NUMBER = 0
-    TOTAL_PLAYER_LIST = []
-    PLAYER_ID = 0
 
     def __init__(self, name=None,
                  first_name=None,
@@ -15,16 +8,13 @@ class Player:
                  total_score=None,
                  tournament_score=None):
 
-        Player.PLAYER_ID += 1
-        Player.TOTAL_PLAYER_NUMBER += 1
         self.name = name
         self.first_name = first_name
         self.birthday = birthday
-        self.player_id = Player.PLAYER_ID
+        self.note = note
+        self.player_id = player_id
         self.total_score = 0
         self.tournament_score = 0
-        self.note = note
-        self.TOTAL_PLAYER_LIST.append(self)
 
     def __call__(self):
         return self.serializer()

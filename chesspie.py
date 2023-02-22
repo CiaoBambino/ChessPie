@@ -1,6 +1,5 @@
 from views.view import MainMenu
 from controllers.controler import Controler
-from models import player
 
 
 def main():

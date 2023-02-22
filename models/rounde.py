@@ -1,6 +1,3 @@
-from models.tournament import Tournament
-
-
 class Round:
 
     def __init__(self, actual_round=None,

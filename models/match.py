@@ -1,19 +1,18 @@
 class Match:
 
-    def __init__(self, A, A_score, B, B_score, color):
+    def __init__(self, playerA, playerA_score, playerB, playerB_score):
 
-        self.A = A
-        self.A_score = A_score
-        self.B = B
-        self.B_score = B_score
-        self.matche = ([A, A_score], [B, B_score])
-        self.color = color
+        self.playerA = playerA
+        self.playerA_score = playerA_score
+        self.playerB = playerB
+        self.playerB_score = playerB_score
+        self.matche = ([self.playerA, self.playerA_score], [self.playerB, self.playerB_score])
 
     def __str__(self) -> str:
-        return "Match opposant " + self.A['first_name'] + " ({color})".format(color=self.color) + " à " + self.B['first_name']
+        return "Match opposant " + self.playerA['first_name'] + " à " + self.playerB['first_name']
 
     def __repr__(self) -> str:
-        return "Match([{},{}], [{},{}])".format(self.A['name'], self.A_score, self.B['name'], self.B_score)
+        return "Match([{},{}], [{},{}])".format(self.playerA['name'], self.playerA_score, self.playerB['name'], self.playerB_score)
 
     def __getitem__(self, index):
         return self.matche[index]

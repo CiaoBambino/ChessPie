@@ -419,7 +419,6 @@ class TournamentControler:
                     starting_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
                     check3 = view.RoundMenu.round_start(tournament.name, str(i), starting_time)
-
                     if check3:
                         ending_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 

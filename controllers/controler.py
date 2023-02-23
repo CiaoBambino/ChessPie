@@ -94,12 +94,18 @@ class Controler:
 
         return matche
 
-    def get_selected_player_index(player_id, file):
+    def get_selected_player_index(player_id, file, option=None):
         """From a given player id return the player index of the dictionnary"""
-        for i in range(len(file[1]['registered_players'])):
-            if file[1]['registered_players'][i]["player_id"] == player_id:
-                selected_player_index = i
-                return selected_player_index
+        if option is not None:
+            for i in range(len(file)):
+                if file[i]['player_id'] == player_id:
+                    selected_player_index = i
+                    return selected_player_index
+        else:
+            for i in range(len(file[1]['registered_players'])):
+                if file[1]['registered_players'][i]["player_id"] == player_id:
+                    selected_player_index = i
+                    return selected_player_index
 
     def get_selected_player(player_id, player_list):
         """From a given player id return the player
@@ -387,9 +393,9 @@ class TournamentControler:
         # store the inputs into data
         data = Controler.get_input(user_data, title, base)
         # load the list of all player from /data/Player.json
-        all_players = Controler.get_player_list()
+        all_player = Controler.get_player_list()
         # select players for the tournament
-        tournament_player_list = view.TournamentMenu.select_players(all_players)
+        tournament_player_list = view.TournamentMenu.select_players(all_player)
         # unpack data and create a new tournament object
         name, place, starting_date, ending_date, description, number_of_rounds = [*data]
         number_of_rounds = int(number_of_rounds)
@@ -400,7 +406,8 @@ class TournamentControler:
     def run(tournament):
 
         number_player = Controler.get_number_player(tournament.registered_players)
-        check = view.TournamentMenu.start_of_tournament(tournament.name, number_player)
+        check = view.TournamentMenu.start_of_tournament(tournament.name,
+                                                        number_player)
 
         if check:
 
@@ -413,16 +420,23 @@ class TournamentControler:
                 match_list, impair_player = RoundControler.get_match_list(player_list, i) # IMPAIR PLAYEER
                 new_round = rounde.Round(i, match_list)
                 rounds.append(new_round)
-                check2 = view.RoundMenu.round_screen(tournament.name, str(i), match_list)
+                check2 = view.RoundMenu.round_screen(tournament.name,
+                                                     str(i),
+                                                     match_list)
 
                 if check2:
                     starting_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-                    check3 = view.RoundMenu.round_start(tournament.name, str(i), starting_time)
+                    check3 = view.RoundMenu.round_start(tournament.name,
+                                                        str(i),
+                                                        starting_time)
                     if check3:
                         ending_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-                        match_list = view.RoundMenu.round_end(tournament.name, str(i), ending_time, match_list)
+                        match_list = view.RoundMenu.round_end(tournament.name,
+                                                              str(i),
+                                                              ending_time,
+                                                              match_list)
                         Controler.set_tournament_score(match_list, tournament)
                         i += 1
                     else:

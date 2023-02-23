@@ -117,8 +117,9 @@ class TournamentMenu:
             ClearTerminal()
             print(base)
             print(tabulate(data, headers='firstrow', tablefmt='fancy_grid'))
-            player_id = int(input("Entrez l'identifiant des joueurs à ajouter : "))
-            condition1 = Controler.is_integer_in_range(player_id, len(player_list))
+            player_id = int(input("Entrez l'ID des joueurs à ajouter : "))
+            condition1 = Controler.is_integer_in_range(player_id,
+                                                       len(player_list))
             condition2 = Controler.is_id_inlist(player_id, player_list)
             checked = False
             if condition1 and condition2:
@@ -128,7 +129,8 @@ class TournamentMenu:
 
             while not checked:
                 player_id = int(input("Veuillez entrer un ID valide : "))
-                condition1 = Controler.is_integer_in_range(player_id, len(player_list))
+                condition1 = Controler.is_integer_in_range(player_id,
+                                                           len(player_list))
                 condition2 = Controler.is_id_inlist(player_id, player_list)
                 if condition1 and condition2:
                     checked = True
@@ -138,9 +140,12 @@ class TournamentMenu:
             response = Controler.is_valid(2)
             if response:
                 ClearTerminal()
-                selected_player = Controler.get_selected_player(player_id, player_list)
+                selected_player = Controler.get_selected_player(player_id,
+                                                                player_list)
                 selected_players.append(selected_player)
-                Controler.remove_index(player_list, (player_id - 1))
+                index = Controler.get_selected_player_index(player_id,
+                                                            player_list, 1)
+                Controler.remove_index(player_list, index)
                 player_counter += 1
                 print("Le joueur n°" + str(player_id) +
                       " a été ajouté à la liste")
@@ -257,7 +262,7 @@ class RoundMenu:
         new_match_list = []
         i = 1
         for matche in match_list:
-            print(str(i), " : Match opposant", matche[0][0]['first_name'], " à", matche[1][0]['first_name'])
+            print(str(i), " : Match opposant", matche[0][0]['first_name'], "à", matche[1][0]['first_name'])
             result = input("Résultat : ")
             checked = Controler.check_match_input(result)
             counter = 1
